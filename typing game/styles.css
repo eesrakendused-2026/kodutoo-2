@@ -1,0 +1,37 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+    flex-direction: column;
+    border: 2px solid orange;
+    color: black;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.container>input {
+    margin: 20px;
+}
+
+.container>div {
+    margin: 20px;
+
+}
+
+#count {
+    font-size: 100px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#info,
+#wordContainer {
+    visibility: hidden;
+}
