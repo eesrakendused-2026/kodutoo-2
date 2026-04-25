@@ -4,15 +4,18 @@ console.log("Test")
 class Typer {
     constructor() {
         this.name = "";
+        this.correctLetter = 0
+        this.incorrectLetter = 0
         this.wordsCounter = 6;
         this.wordLength = 2;
         this.startTime = 0;
         this.endTime = 0;
         this.words = [];
+        this.timer = 0
         this.typeWords = []
         this.wordsType = 0
         this.counter = 0
-        this.score = 999
+        this.score = 0
         this.loadWords()
         this.getWords()
         this.sortWords()
@@ -47,22 +50,30 @@ class Typer {
         this.startGame()
     }
 
+
     startGame() {
         let i = 0
         this.generateWords();
-        window.addEventListener("keypress", (event) => { this.shorterWord(event.key) })
-        this.name = document.getElementById("username").value
+        window.addEventListener("keypress", (event) => {
+            this.shorterWord(event.key)
+        })
 
-        setInterval(()=>{
-            this.score = parseInt(this.score) - 1
-            document.getElementById("score").innerHTML = this.score
+        let timer = setInterval(() => {
+            if (this.counter >= this.wordsCounter) {
+                clearInterval(timer)
+            }
+            this.timer += 1
+            document.getElementById("timer").innerHTML = `Timer: ${this.timer}`
         }, 1000)
+
+        timer()
     }
 
     shorterWord(event) {
         console.log(event)
         if (this.word[0] === event && this.word.length > 1 && this.typeWords.length > this.wordsType) {
             this.word = this.word.slice(1)
+            this.correctLetter += 1
             this.drawWord()
         }
         else if (this.word[0] === event && this.word.length == 1 && this.typeWords.length - 2 >= this.wordsType) {
@@ -72,6 +83,9 @@ class Typer {
         else if (this.word[0] === event && this.word.length == 1 && this.typeWords.length - 2 == this.wordsType) {
             this.wordsType = 0
             document.getElementById("word").innerHTML = "Game over"
+        }
+        else if (this.word[0] != event) {
+            this.incorrectLetter += 1
         }
     }
 
@@ -95,13 +109,37 @@ class Typer {
             this.drawWord()
         }
         else if (this.counter >= this.wordsCounter) {
-            console.log("Läbi mang")
-            this.saveResult()
-            alert(`Nimi: ${this.name}, Skoor: ${this.score}`)
+            this.enterName()
         }
 
     }
 
+    enterName() {
+        console.log("Correct leters:", this.correctLetter, "Incorrect Letters:", this.incorrectLetter)
+        let nameContainer = document.getElementById("insertNameContainer")
+        let nameInput = document.getElementById("nameInput")
+        let saveName = document.getElementById("saveName")
+        nameContainer.style.visibility = "visible"
+        saveName.addEventListener("click", () => {
+            console.log(nameInput.value)
+            if (nameInput.value === "") {
+                alert("Name cant be empty")
+            }
+            else {
+                document.getElementById("timer").innerHTML = `Timer: 0`
+                let wordCont = document.getElementById("wordContainer")
+                info.style.visibility = "hidden"
+                wordCont.style.visibility = "hidden"
+                nameContainer.style.visibility = "hidden"
+                document.getElementById("name").style.display = ""
+                this.name = nameInput.value
+                document.getElementById("word").style.visibility = "hidden"
+                this.saveResult()
+
+            }
+        })
+
+    }
 
     drawWord() {
         document.getElementById("word").innerHTML = this.word
@@ -112,7 +150,7 @@ class Typer {
             name: this.name,
             time: this.score
         }
-        localStorage.setItem("score", json.stringify(result))
+        localStorage.setItem("score", JSON.stringify(result))
 
         try {
             await fetch("server.php", {
@@ -129,20 +167,23 @@ class Typer {
 
 
 }
-document.getElementById("saveName").addEventListener("click", () => {
+document.getElementById("startGame").addEventListener("click", () => {
     let infoCont = document.getElementById("info")
     let wordCont = document.getElementById("wordContainer")
+    document.getElementById("word").style.visibility = "hidden"
+    document.getElementById("wordContainer").style.visibility = "visible"
+    document.getElementById("info").style.visibility = "visible"
+    document.getElementById("name").style.display = "none"
     let count = 3;
     const countdown = setInterval(() => {
-        document.getElementById("count").innerHTML = count
-        document.getElementById("name").style.display = "none"
+        document.getElementById("word").style.visibility = "visible"
+        document.getElementById("word").innerHTML = count
         count--;
 
         if (count < 0) {
             clearInterval(countdown);
             wordCont.style.visibility = "visible"
             infoCont.style.visibility = "visible"
-            document.getElementById("count").style.display = "none"
             let typer = new Typer();
         }
     }, 1000);

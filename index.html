@@ -10,21 +10,26 @@
 </head>
 
 <body>
-    <div id="name" class="container">
-        <label for="username">Sisesta nimi
-            <input type="text" id="username" name="username">
-            <input type="button" id="saveName" value="save">
-        </label>
-        <button id="saveBtn">Save Button</button>
+    <div id="navbar">
+        <h1>TYPER</h1>
+        <button>Leaderboards</button>
     </div>
-    <div id="count"></div>
+    <div id="name">
+        <input type="button" id="startGame" value="START GAME">
+    </div>
 
+    <div id="wordContainer" class="container">
+        <div id="word">3</div>
+        <div id="timer">Timer: 0</div>
+    </div>
     <div id="info" class="container">
         <div id="wordcount">1/5</div>
     </div>
-    <div id="wordContainer" class="container">
-        <div id="word">Siin on sõna</div>
-        <div id="score">999</div>
+    <div id="insertNameContainer">
+        <label for="nameInput">Please Enter Your name:
+            <input id="nameInput" />
+            <button id="saveName">Save</button>
+        </label>
     </div>
 
 </body>
