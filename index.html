@@ -7,29 +7,48 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="index.js" defer></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+    </style>
 </head>
 
 <body>
+    <audio id="myAudio">
+        <source src="./public/gamestart.mp3" type="audio/ogg">
+        </source>
+    </audio>
+    <audio id="activeAudio">
+        <source src="./public/activemusic.mp3" type="audio/ogg">
+        </source>
+    </audio>
+    <audio id="winGood">
+        <source src="./public/winGood.mp3" type="audio/ogg">
+        </source>
+    </audio>
     <div id="navbar">
-        <h1>TYPER</h1>
-        <button>Leaderboards</button>
+        <h1 id="title">TYPER</h1>
+        <button id="leaderboardsBtn">Leaderboards</button>
     </div>
     <div id="name">
         <input type="button" id="startGame" value="START GAME">
     </div>
-
-    <div id="wordContainer" class="container">
-        <div id="word">3</div>
-        <div id="timer">Timer: 0</div>
-    </div>
-    <div id="info" class="container">
-        <div id="wordcount">1/5</div>
+    <div id="allContainer">
+        <div id="wordContainer" class="container">
+            <div id="word">3</div>
+            <div id="timer">Timer: 0</div>
+        </div>
+        <div id="info" class="container">
+            <div id="wordcount"></div>
+        </div>
     </div>
     <div id="insertNameContainer">
-        <label for="nameInput">Please Enter Your name:
-            <input id="nameInput" />
+        <label for="nameInput">Please Enter Your name:<br>
+            <input autocomplete="off" id="nameInput" /><br>
             <button id="saveName">Save</button>
         </label>
+    </div>
+    <div id="leaderboardContainer">
     </div>
 
 </body>
