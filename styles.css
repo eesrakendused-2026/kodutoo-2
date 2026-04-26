@@ -26,9 +26,9 @@ body {
     font-size: 30px;
     font-family: "Archivo Black", sans-serif;
     background-color: white;
+    border: 2px solid black;
     font-weight: 400;
     font-style: normal;
-    border: none;
     transition: .3s;
 }
 
@@ -41,7 +41,6 @@ body {
 }
 
 
-
 #leaderboardsBtn {
     position: absolute;
     top: 200px;
@@ -51,9 +50,22 @@ body {
     font-size: 25px;
     padding-left: 0px;
     transition: .2s;
+    padding-right: 14px;
 }
 
-#leaderboardsBtn:hover {
+#customizeBtn {
+    position: absolute;
+    top: 250px;
+    font-family: "Archivo Black", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 25px;
+    padding-left: 0px;
+    transition: .2s;
+}
+
+#leaderboardsBtn:hover,
+#customizeBtn:hover {
     color: white;
     background-color: black;
     transition: .4s;
@@ -61,13 +73,18 @@ body {
     cursor: pointer;
 }
 
-#leaderboardsBtn:active {
+#leaderboardsBtn:active,
+#customizeBtn:active {
     color: black;
     background-color: white;
     transition: .1s;
 }
 
-#leaderboardContainer {
+.cross {
+    float: right;
+}
+
+.containerHidden {
     background-color: black;
     color: white;
     position: absolute;
@@ -79,13 +96,13 @@ body {
     transition: 1s;
 }
 
-#leaderboardContainer>h1 {
+.containerHidden>h1 {
     font-weight: normal;
     font-size: 22px;
     transition: .5s;
 }
 
-#leaderboardContainer>h1:hover {
+.containerHidden>h1:hover {
     font-weight: normal;
     color: black;
     background-color: white;
@@ -95,13 +112,12 @@ body {
 body {
     counter-reset: section;
 }
-
 #leaderboardContainer>h1::before {
     counter-increment: section;
     content: counter(section) ". ";
 }
 
-#leaderboardContainer>h1:nth-child(1) {
+#leaderboardContainer>h1:first-child {
     color: rgb(245, 174, 44);
 }
 
@@ -114,9 +130,9 @@ body {
     color: rgb(104, 69, 4);
 }
 
-#leaderboardContainer>h1:nth-child(1):hover,
-#leaderboardContainer>h1:nth-child(2):hover,
-#leaderboardContainer>h1:nth-child(3):hover {
+.leaderboardContainer>h1:nth-child(2):hover,
+.leaderboardContainer>h1:nth-child(3):hover,
+.leaderboardContainer>h1:nth-child(4):hover {
     color: black;
 }
 
@@ -138,6 +154,31 @@ body {
 
 .container>div {
     margin: 20px;
+}
+
+.color {
+    display: flex;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-family: "Archivo Black", sans-serif;
+    padding-bottom: 20px;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.color:hover {
+    cursor: pointer;
+    transition: .5s;
+}
+
+#red:hover {
+    color: red;
+}
+
+#pink:hover {
+    color: pink;
 }
 
 #count,
@@ -180,6 +221,10 @@ body {
     visibility: hidden;
 }
 
+#insertNameContainer>img {
+    width: 300px;
+}
+
 #nameInput {
     font-size: 20px;
     color: black;
@@ -212,4 +257,239 @@ body {
     border: 2px solid white;
     border-radius: 10px;
     font-size: 23px;
+}
+
+@media (max-width: 800px) {
+
+
+    #title {
+        position: absolute;
+    }
+
+
+    #navbar {
+        margin: 0px;
+    }
+
+    #navbar>h1 {
+        padding: 0px;
+        font-size: 50px;
+        width: fit-content;
+    }
+
+    #startGame {
+        font-size: 30px;
+        font-family: "Archivo Black", sans-serif;
+        background-color: white;
+        font-weight: 400;
+        font-style: normal;
+        border: none;
+        transition: .3s;
+    }
+
+    #count,
+    #name {
+        width: fit-content;
+        position: absolute;
+        font-size: 100px;
+        font-weight: bold;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #word {
+        font-size: 40px;
+        padding-top: 300px;
+    }
+
+    #info,
+    #wordContainer {
+        visibility: hidden;
+    }
+
+    #allContainer {
+        padding: 0%;
+
+    }
+
+    #insertNameContainer {
+        background-color: black;
+        color: white;
+        font-size: 20px;
+        position: absolute;
+        padding: 30px;
+        height: fit-content;
+        width: 350px;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        visibility: hidden;
+    }
+
+    #insertNameContainer>img {
+        width: 200px;
+    }
+
+    #nameInput {
+        font-size: 20px;
+        color: black;
+        transition: .2s linear;
+        font-family: "Archivo Black", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .containerHidden {
+        background-color: black;
+        color: white;
+        position: absolute;
+        padding: 20px;
+        width: 300px;
+        height: fit-content;
+        top: 300px;
+        left: -150%;
+        transition: 1s;
+    }
+
+    .containerHidden>h1 {
+        font-weight: normal;
+        font-size: 17px;
+        transition: .5s;
+    }
+
+    #leaderboardsBtn {
+        position: absolute;
+        top: 200px;
+        font-family: "Archivo Black", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 15px;
+        padding-left: 0px;
+        transition: .2s;
+    }
+
+    #customizeBtn {
+        position: absolute;
+        top: 250px;
+        font-family: "Archivo Black", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 15px;
+        padding-left: 0px;
+        transition: .2s;
+    }
+}
+
+@media (max-width: 400px) {
+
+
+    #title {
+        position: absolute;
+    }
+
+
+    #navbar {
+        margin: 0px;
+    }
+
+    #navbar>h1 {
+        padding: 0px;
+        font-size: 50px;
+        width: fit-content;
+    }
+
+    #startGame {
+        font-size: 25px;
+        font-family: "Archivo Black", sans-serif;
+        background-color: white;
+        font-weight: 400;
+        font-style: normal;
+        border: none;
+        transition: .3s;
+    }
+
+    #count,
+    #name {
+        width: fit-content;
+        position: absolute;
+        font-size: 100px;
+        font-weight: bold;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #word {
+        font-size: 40px;
+        padding-top: 300px;
+    }
+
+    #info,
+    #wordContainer {
+        visibility: hidden;
+    }
+
+    #allContainer {
+        padding: 0%;
+
+    }
+
+    #insertNameContainer {
+        background-color: black;
+        color: white;
+        font-size: 20px;
+        position: absolute;
+        padding: 30px;
+        height: fit-content;
+        width: 350px;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        visibility: hidden;
+    }
+
+    #insertNameContainer>img {
+        width: 200px;
+    }
+
+    #nameInput {
+        font-size: 20px;
+        color: black;
+        transition: .2s linear;
+        font-family: "Archivo Black", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .containerHidden {
+        background-color: black;
+        color: white;
+        position: absolute;
+        padding: 0px;
+        width: 300px;
+        height: fit-content;
+        top: 300px;
+        left: -200%;
+        transition: 1s;
+    }
+
+    .containerHidden>h1 {
+        font-weight: normal;
+        font-size: 17px;
+        transition: .5s;
+    }
+
+    #leaderboardsBtn {
+        position: absolute;
+        top: 200px;
+        font-family: "Archivo Black", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 15px;
+        padding-left: 0px;
+        transition: .2s;
+    }
 }

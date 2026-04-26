@@ -8,6 +8,8 @@ class Typer {
         this.incorrectLetter = 0
         this.activeAudio = document.getElementById("activeAudio")
         this.winAudioGood = document.getElementById("winGood")
+        this.loseAudio = document.getElementById("winBad")
+        this.keypressAudio = document.getElementById("keypress")
         this.wordsCounter = 5;
         this.wordLength = 2;
         this.startTime = 0;
@@ -25,6 +27,7 @@ class Typer {
         this.startGame()
         this.selectWord()
         this.shorterWord()
+        this.imageController()
     }
 
     async loadWords() {
@@ -49,6 +52,7 @@ class Typer {
                 this.words[wordLength].push(word)
             }
         }
+        //Start music during game
         this.activeAudio.volume = 0.2
         this.activeAudio.play()
 
@@ -60,6 +64,9 @@ class Typer {
         let i = 0
         this.generateWords();
         window.addEventListener("keypress", (event) => {
+            this.keypressAudio.volume = Math.random() * 0.6;
+            this.keypressAudio.playbackRate = 2;
+            this.keypressAudio.play()
             this.shorterWord(event.key)
         })
 
@@ -122,8 +129,11 @@ class Typer {
     enterName() {
         console.log("Correct leters:", this.correctLetter, "Incorrect Letters:", this.incorrectLetter)
         this.activeAudio.pause()
-        this.winAudioGood.volume = 0.2
-        this.winAudioGood.play()
+        console.log(this.timer)
+
+        this.imageController()
+
+        //Name input controller
         let nameContainer = document.getElementById("insertNameContainer")
         let nameInput = document.getElementById("nameInput")
         let saveName = document.getElementById("saveName")
@@ -147,19 +157,39 @@ class Typer {
                 location.reload()
             }
         })
+    }
 
+    imageController() {
+        let imgContainer = document.getElementById("imgContainer")
+        let imgText = document.getElementById("imgText")
+        if (this.timer >= 15) {
+            imgContainer.src = "./public/grave.png"
+            imgText.innerText = "Your speed: Corpse"
+            this.loseAudio.volume = 0.2
+            this.loseAudio.play()
+        }
+        else if (this.timer > 10 && this.timer < 15) {
+            imgContainer.src = "./public/epona.png"
+            imgText.innerText = "Your speed: Horse"
+            this.winAudioGood.volume = 0.2
+            this.winAudioGood.play()
+        }
+        else {
+            imgContainer.src = "./public/cheetah.png"
+            imgText.innerText = "Your speed: Cheetah"
+            this.winAudioGood.volume = 0.2
+            this.winAudioGood.play()
+        }
     }
 
     drawWord() {
         document.getElementById("word").innerHTML = this.word
     }
 
-    scoreCalc() { }
-
     saveResult() {
         let result = {
             name: this.name,
-            score: this.correctLetter - this.incorrectLetter,
+            score: Math.floor(((this.correctLetter - this.incorrectLetter) / this.timer) * 100),
             time: this.timer
         }
         console.log(result)
@@ -171,19 +201,52 @@ class Typer {
 
 }
 
-//Leaderboards controller
-let clicked = false
-document.getElementById("leaderboardsBtn").addEventListener("click", () => {
-    console.log(clicked)
-    if (!clicked) {
-        document.getElementById('leaderboardContainer').style.left = "0%"
-        clicked = true
-    }
-    else if (clicked) {
-        document.getElementById('leaderboardContainer').style.left = "-100%"
-        clicked = false
-    }
-})
+//Leaderboards menu controller
+let clickedLb = false
+function leaderboardMenu() {
+    document.getElementById("leaderboardsBtn").addEventListener("click", () => {
+        if (!clickedLb) {
+            document.getElementById('leaderboardContainer').style.left = "0%"
+            clickedLb = true
+            document.getElementById('customizationContainer').style.left = "-100%"
+            clickedCz = false
+        }
+        else if (clickedLb) {
+            document.getElementById('leaderboardContainer').innerHTML = ""
+            document.getElementById('leaderboardContainer').style.left = "-100%"
+            clickedLb = false
+        }
+    })
+}
+
+
+
+
+//Customization menu controller
+let clickedCz = false
+function customizationMenu() {
+    let container = document.getElementById("customizationContainer")
+    let customizeBtn = document.getElementById("customizeBtn")
+    let colors = document.getElementsByClassName("color")
+    customizeBtn.addEventListener("click", () => {
+        for (let i = 0; i < colors.length; i++) {
+            colors[i].addEventListener("click", () => {
+                document.body.style.backgroundColor = `${colors[i].id}`
+            })
+        }
+        if (!clickedCz) {
+            document.getElementById('customizationContainer').style.left = "0%"
+            clickedCz = true
+            document.getElementById('leaderboardContainer').style.left = "-100%"
+            document.getElementById('leaderboardContainer').innerHTML = ""
+            clickedLb = false
+        }
+        else if (clickedCz) {
+            document.getElementById('customizationContainer').style.left = "-100%"
+            clickedCz = false
+        }
+    })
+}
 
 
 //Start game controller
@@ -215,18 +278,22 @@ document.getElementById("startGame").addEventListener("click", () => {
     countdown()
 
 })
+
+
+//Leaderboards updater cotroller
 function updateLeaderboard() {
     let users = JSON.parse(localStorage.getItem("score")) || []
-    console.log(users[0])
-    if (users[0] === undefined) {
-        document.getElementById("leaderboardContainer").innerHTML += `<h2>No scores have been submitted</h2>`
-    }
-    users.sort(function (a, b) {
-        return b.score - a.score
+    document.getElementById("leaderboardsBtn").addEventListener('click', () => {
+        if (users[0] === undefined) {
+            document.getElementById("leaderboardContainer").innerHTML += `<h2>No scores have been submitted</h2>`
+        }
+        users.sort(function (a, b) {
+            return b.score - a.score
+        })
+        for (let i = 0; i < users.length; i++) {
+            document.getElementById("leaderboardContainer").innerHTML += `<h1>${users[i].name}, Score: ${users[i].score}, Time: ${users[i].time} </h1>`
+        }
     })
-    for (let i = 0; i < users.length; i++) {
-        document.getElementById("leaderboardContainer").innerHTML += `<h1>${users[i].name}, Score: ${users[i].score}</h1>`
-    }
 }
 
 function fontChanger() {
@@ -247,7 +314,7 @@ function fontChanger() {
     setInterval(() => {
         text.style.fontFamily = fonts[index];
         index = Math.floor(Math.random() * fonts.length);
-    }, 200);
+    }, 250);
 }
 
-window.addEventListener("load", () => {updateLeaderboard(); fontChanger()})
+window.addEventListener("load", () => { updateLeaderboard(); fontChanger(); customizationMenu(), leaderboardMenu() })

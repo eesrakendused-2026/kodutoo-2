@@ -15,20 +15,24 @@
 
 <body>
     <audio id="myAudio">
-        <source src="./public/gamestart.mp3" type="audio/ogg">
-        </source>
+        <source src="./public/gamestart.mp3" type="audio/ogg" />
     </audio>
     <audio id="activeAudio">
-        <source src="./public/activemusic.mp3" type="audio/ogg">
-        </source>
+        <source src="./public/activemusic.mp3" type="audio/ogg" />
     </audio>
     <audio id="winGood">
-        <source src="./public/winGood.mp3" type="audio/ogg">
-        </source>
+        <source src="./public/winGood.mp3" type="audio/ogg" ->
+    </audio>
+    <audio id="keypress">
+        <source src="./public/keypress.mp3" type="audio/ogg" ->
+    </audio>
+    <audio id="winBad">
+        <source src="./public/winBad.mp3" type="audio/ogg" ->
     </audio>
     <div id="navbar">
         <h1 id="title">TYPER</h1>
         <button id="leaderboardsBtn">Leaderboards</button>
+        <button id="customizeBtn">Customization</button>
     </div>
     <div id="name">
         <input type="button" id="startGame" value="START GAME">
@@ -43,14 +47,20 @@
         </div>
     </div>
     <div id="insertNameContainer">
+        <img id="imgContainer" src="">
+        <h2 id="imgText">Your speed: Cheetah</h2>
         <label for="nameInput">Please Enter Your name:<br>
             <input autocomplete="off" id="nameInput" /><br>
             <button id="saveName">Save</button>
         </label>
     </div>
-    <div id="leaderboardContainer">
+    <div id="leaderboardContainer" class="containerHidden">
     </div>
-
+    <div id="customizationContainer" class="containerHidden">
+        <button class="color" id="white">Default Background</button>
+        <button class="color" id="red">Red Background</button>
+        <button class="color" id="pink">Pink Background</button>
+    </div>
 </body>
 
 </html>
