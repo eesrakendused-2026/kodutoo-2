@@ -1,10 +1,4 @@
-//console.log("fail ühendatud");
-//const API_BASE = "http://10.10.10.148:3000/api";
-//const API_BASE = "http://localhost:3000/api";
 const API_BASE = `${window.location.protocol}//${window.location.hostname}:3000/api`;
-//const API_BASE = "/api";
-
-//TODO: tulemuste tabelis raskusastme järgi sorteerimine
 
 
 class Typer {
@@ -43,12 +37,27 @@ class Typer {
 
         const header = document.createElement("div");
         header.className = "resultsHeader";
-        header.innerHTML = `
-            <div class="resultRank">Koht</div>
-            <div class="resultName">Nimi</div>
-            <div class="resultTime">Aeg</div>
-            <div class="resultWPM">WPM</div>
-        `;
+
+        const rank = document.createElement("div");
+        rank.className = "resultRank";
+        rank.textContent = "Koht";
+
+        const name = document.createElement("div");
+        name.className = "resultName";
+        name.textContent = "Nimi";
+
+        const time = document.createElement("div");
+        time.className = "resultTime";
+        time.textContent = "Aeg";
+
+        const wpm = document.createElement("div");
+        wpm.className = "resultWPM";
+        wpm.textContent = "WPM";
+
+        header.appendChild(rank);
+        header.appendChild(name);
+        header.appendChild(time);
+        header.appendChild(wpm);
         resultDiv.appendChild(header);
 
         for (let i = 0; i < this.results.length; i++) {
@@ -57,21 +66,34 @@ class Typer {
 
             const time = parseFloat(this.results[i].time);
             const difficultResult = this.getGameDifficulty(this.results[i].difficulty);
-            const wpm = time > 0 ? ((difficultResult / time) * 60).toFixed(2) : "0.00";
+            const wpm = time > 0 ? ((difficultResult.wordsInGame / time) * 60).toFixed(2) : "0.00";
 
-            row.innerHTML = `
-                <div class="resultRank">${i + 1}</div>
-                <div class="resultName">${this.results[i].name}</div>
-                <div class="resultTime">${this.results[i].time}s</div>
-                <div class="resultWPM">${wpm}</div>
-            `;
+            const rankDiv = document.createElement("div");
+            rankDiv.className = "resultRank";
+            rankDiv.textContent = i + 1;
+
+            const nameDiv = document.createElement("div");
+            nameDiv.className = "resultName";
+            nameDiv.textContent = this.results[i].name;
+
+            const timeDiv = document.createElement("div");
+            timeDiv.className = "resultTime";
+            timeDiv.textContent = this.results[i].time + "s";
+
+            const wpmDiv = document.createElement("div");
+            wpmDiv.className = "resultWPM";
+            wpmDiv.textContent = wpm;
+
+            row.appendChild(rankDiv);
+            row.appendChild(nameDiv);
+            row.appendChild(timeDiv);
+            row.appendChild(wpmDiv);
 
             resultDiv.appendChild(row);
         }
     }
 
     async loadFromFile() {
-        //console.log("load from file sees");
         try {
             const responseFromFile = await fetch("words.txt");
             const allWords = await responseFromFile.text();
@@ -93,7 +115,6 @@ class Typer {
     }
 
     getWords(data) {
-        //console.log(data);
         const dataFromFile = data.split("\n");
 
         this.separateWordsByLength(dataFromFile);
@@ -277,7 +298,7 @@ class Typer {
         this.typeWords = [];
 
         const difficulty = document.getElementById("difficulty").value;
-        this.getGameDifficulty(difficulty);
+        this.applyGameDifficulty(difficulty);
 
         const allowedLengths = [];
         for (let len = 1; len <= this.wordLength; len++) {
@@ -377,20 +398,20 @@ class Typer {
     getGameDifficulty(difficulty) {
         switch (difficulty) {
             case "Lihtne":
-                this.wordLength = 4;
-                this.wordsInGame = 5;
-                return 5;
+                return { wordsInGame: 5, wordLength: 4 };
             case "Keskmine":
-                this.wordLength = 6;
-                this.wordsInGame = 10;
-                return 10;
+                return { wordsInGame: 10, wordLength: 6 };
             case "Raske":
-                this.wordLength = 8;
-                this.wordsInGame = 15;
-                return 15;
+                return { wordsInGame: 15, wordLength: 8 };
             default:
-                return 0;
+                return { wordsInGame: 5, wordLength: 4 };
         }
+    }
+
+    applyGameDifficulty(difficulty) {
+        const gameSettings = this.getGameDifficulty(difficulty);
+        this.wordsInGame = gameSettings.wordsInGame;
+        this.wordLength = gameSettings.wordLength;
     }
 
     endImage(wpm) {
