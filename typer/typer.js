@@ -1,4 +1,7 @@
-const API_BASE = `${window.location.protocol}//${window.location.hostname}:3000/api`;
+const API_BASE =
+  window.location.port === "5500"
+    ? `${window.location.protocol}//${window.location.hostname}:3000/api`
+    : new URL("/api", window.location.origin).toString();
 
 
 class Typer {
@@ -218,8 +221,8 @@ class Typer {
     shortenWord(keypressed) {
         if (!keypressed || keypressed.length !== 1) return;
 
-        const key = (keypressed || "").toLowerCase();
-        const expected = (this.word[0] || "").toLowerCase();
+        const key = this.isMobileMode ? keypressed.toLowerCase() : keypressed;
+        const expected = this.isMobileMode ? this.word[0].toLowerCase() : this.word[0];
 
         if (expected === key && this.word.length > 1 && this.typeWords.length > this.wordsTyped) {
             this.playSound("wordClick");
@@ -274,24 +277,26 @@ class Typer {
         document.getElementById("gameOverModal").classList.remove("hidden");
         document.getElementById("playAgain").style.display = "flex";
 
-
         await this.saveResult();
     }
 
     async saveResult() {
-        const result = { name: this.name, difficulty: document.getElementById("difficulty").value, time: this.score };
+        if (this.name && this.score) {
+            const result = { name: this.name.trim(), difficulty: document.getElementById("difficulty").value, time: Number(this.score) };
+            try {
+                const res = await fetch(`${API_BASE}/results`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(result)
+                });
+            } catch (err) {
+                throw new Error("Failed to save result");
+            }
 
-        try {
-            const res = await fetch(`${API_BASE}/results`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(result)
-            });
-        } catch (err) {
-            throw new Error("Failed to save result");
+            await this.loadResultsFromFile();
+        } else {
+            console.warn("Name or score is missing, result not saved");
         }
-
-        await this.loadResultsFromFile();
     }
 
     generateWords() {

@@ -6,6 +6,12 @@ const { Pool } = require("pg");
 const app = express();
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
+/*const corsOptions = {
+    origin: process.env.CORS_ORIGIN || "http://localhost:5500",
+    methods: "GET,POST"
+}*/
+
+//app.use(cors(corsOptions));
 app.use(cors());
 app.use(express.json());
 
@@ -44,9 +50,27 @@ app.get("/api/results", async (req, res) => {
 
 app.post("/api/results", async (req, res) => {
     try {
+
         const { name, difficulty, time } = req.body;
+
         if (!name || !difficulty || time === undefined) {
             return res.status(400).json({ error: "Name, difficulty, and time are required" });
+        }
+
+        if (typeof name !== "string" || typeof difficulty !== "string" || typeof time !== "number") {
+            return res.status(400).json({ error: "Invalid data types" });
+        }
+
+        if (name.length < 1 || name.length > 50) {
+            return res.status(400).json({ error: "Name must be between 1 and 50 characters" });
+        }
+
+        if (!["Lihtne", "Keskmine", "Raske"].includes(difficulty)) {
+            return res.status(400).json({ error: "Invalid difficulty" });
+        }
+
+        if (time < 0) {
+            return res.status(400).json({ error: "Time must be a positive number" });
         }
 
         const sql = `
