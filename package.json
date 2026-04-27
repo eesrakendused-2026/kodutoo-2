@@ -1,0 +1,29 @@
+{
+  "name": "kodutoo2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:api": "nodemon index.js",
+    "dev:web": "http-server ./typer -p 5500 -c-1 -o /index.html",
+    "dev": "concurrently 'npm:dev:api' 'npm:dev:web'",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "eslint": "^10.2.1",
+    "http-server": "^14.1.1",
+    "nodemon": "^3.1.14"
+  }
+}

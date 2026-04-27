@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=fire">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <script src="typer.js" defer></script>
+
+</head>
+
+<body>
+    <button id="toggleSide">Ava küljepaneel</button>
+    <div id="pageLayout">
+        <div id="containerLayout">
+            <div id="gameContainer">
+                <h1>Typer</h1>
+                <div id="name" class="container">
+                    <label for="name">Sisesta oma nimi</label>
+                    <input type="text" id="username">
+                    <input type="button" value="Mängi" id="submitName">
+                </div>
+
+                <div id="counter" class="container">
+                    <div id="time">3</div>
+                </div>
+
+                <div id="info" class="container">
+                    <div id="wordCount">1/5</div>
+                </div>
+
+                <div id="wordContainer" class="container">
+                    <div id="word"></div>
+                    <div id="score"></div>
+                    <input
+                    id="mobileTyperInput"
+                    type="text"
+                    inputmode="text"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    placeholder="Type here on mobile"
+                    aria-label="Mobile typing input"
+                    />
+                    <div id="playAgain">
+                        <button id="playAgainBtn">Mängi uuesti</button>
+                    </div>
+                </div>
+
+                <div id="infoContainer">
+                    <div class="infoBox" id="settingsBox">
+                        <div>
+                            <label for="difficulty">Raskusaste:</label>
+                            <select id="difficulty">
+                                <option value="Lihtne">Lihtne</option>
+                                <option value="Keskmine">Keskmine</option>
+                                <option value="Raske">Raske</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="infoBox" id="wpmInfo">
+                        <h3>WPM Hinnang</h3>
+                        <p>20 WPM: Väga aeglane</p>
+                        <p>40 WPM: Alla keskmise</p>
+                        <p>60 WPM: Keskmine</p>
+                        <p>80 WPM: Üle keskmise</p>
+                        <p>100 WPM: Kiire</p>
+                    </div>
+                </div>
+
+            </div>
+            <div id="sideContainer">
+                <div id="resultsContainer" class="container">
+                    <h2 class="font-effect-fire">Top 20</h2>
+                    <select id="resultDifficulty">
+                        <option value="Lihtne">Lihtne</option>
+                        <option value="Keskmine">Keskmine</option>
+                        <option value="Raske">Raske</option>
+                    </select>
+                    <div id="results"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameOverModal" class="modal hidden">
+        <div class="modalContent">
+            <h2>Mäng Läbi</h2>
+            <p id="finalScore"></p>
+            <img id="endImage" src="" alt="">
+            <button id="closeModalBtn">Kinni</button>
+        </div>
+    </div>
+
+</body>
+
+</html>
