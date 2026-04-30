@@ -1,24 +1,4 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBjGfDt0iZsjwk-D9yToC3LHzMx7y5x5RU",
-  authDomain: "typer-add.firebaseapp.com",
-  projectId: "typer-add",
-  storageBucket: "typer-add.firebasestorage.app",
-  messagingSenderId: "214276279054",
-  appId: "1:214276279054:web:8f4330cb69f4e0c224255f",
-  measurementId: "G-KGWMMXZR8B"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 console.log("Fail õigesti ühendatud");
 
 class Typer{
