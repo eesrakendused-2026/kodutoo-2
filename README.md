@@ -1,3 +1,6 @@
+kopeerisin oma tehtud koodi: https://github.com/W1ttyRat/eesrakendused/tree/main/kodutoo2
+seal on täpsemad commit sõnumid ja muudatused
+
 # kodutoo-2
 Täiusta tunnis loodud typer'i rakendust.
 
