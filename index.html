@@ -3,35 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <title>Typer</title>
 </head>
 <body>
-    <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
-    </div>
+    <div class="main-wrapper">
+        <div id="name" class="container">
+            <label for="username">Sisesta oma nimi</label>
+            <input type="text" id="username" placeholder="Sinu nimi...">
+            
+            <label for="difficulty" style="margin-top: 15px; font-size: 1rem;">Mitu sõna soovid trükkida?</label>
+            <select id="difficulty" class="styled-select">
+                <option value="1">1 sõna (Test)</option>
+                <option value="3">3 sõna</option>
+                <option value="5" selected>5 sõna</option>
+                <option value="10">10 sõna</option>
+            </select>
 
-    <div id="counter" class="container">
-        <div id="time"></div>
-    </div>
+            <input type="button" value="Salvesta" id="submitname">
+            <input type="button" value="Näita Edetabelit" id="showModalBtn" class="secondary-btn">
+            
+            <input type="button" value="Tume režiim 🌙" id="darkModeBtn" class="secondary-btn" style="margin-top: 5px;">
+        </div>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
-    </div>
+        <div id="counter" class="container">
+            <div id="time"></div>
+        </div>
 
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
-    </div>
+        <div id="info" class="container">
+            <div id="wordcount"></div>
+            <div id="mistakesCount">Vigu: 0</div>
+        </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+        <div id="wordContainer" class="container">
+            <div id="word"></div>
+             <div id="score"></div>
+            <img id="playerImage" src="" alt="" style="display: none; margin-bottom: 20px;">
+    
+            <input type="button" value="Mängi uuesti" id="restartBtn" class="secondary-btn" style="display: none;">
+        </div>
+
+        <div id="resultsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>TOP 20</h2>
+                <div class="results-header">
+                    <span>Koht</span>
+                    <span>Nimi</span>
+                    <span>Aeg (s)</span>
+                    <span>Vigu</span>
+                </div>
+                <div id="results">
+                </div>
+            </div>
         </div>
     </div>
-    
 </body>
 </html>

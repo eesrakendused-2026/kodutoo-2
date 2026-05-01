@@ -1,34 +1,307 @@
-body{
-    margin:0;
-    padding:0;
+:root {
+    --bg-color: #f0f4f8;
+    --text-color: #333333;
+    --primary-color: #4a90e2;
+    --primary-hover: #357abd;
+    --card-bg: #ffffff;
 }
 
-.container{
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
+    min-height: 100vh;
+}
+
+.main-wrapper {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
+    margin-bottom: 20px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 30px 20px;
 }
 
-.container > div {
-    padding: 10px;
-}
-
-.container > input {
-    margin: 5px;
-}
-
-#info, #wordContainer, #counter{
+#info, #wordContainer, #counter {
     display: none;
 }
 
-#word, #time{
-    font-size: 36px;
-    font-weight: 700;
+label {
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
 }
 
-#info{
+input[type="text"] {
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+    font-family: inherit;
+    text-align: center;
+}
+
+input[type="text"]:focus {
+    border-color: var(--primary-color);
+}
+
+input[type="button"] {
+    margin-top: 15px;
+    padding: 12px 30px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    font-family: inherit;
+}
+
+input[type="button"]:hover {
+    background-color: var(--primary-hover);
+}
+
+input[type="button"]:active {
+    transform: scale(0.95);
+}
+
+#word, #time {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-align: center;
+    word-break: break-word;
+}
+
+#time {
+    color: var(--primary-color);
+}
+
+#info {
     min-height: 30px;
-    align-items: start;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    color: #666;
+    font-weight: 600;
+}
+
+#resultsContainer h2 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+#results {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+#results div {
+    padding: 12px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+
+#results div:nth-child(even) {
+    background-color: #eef2f5;
+}
+
+#results div:first-child {
+    background-color: #ffd700;
+    color: #000;
+    font-size: 1.1em;
+}
+
+@media (max-width: 600px) {
+    #word, #time {
+        font-size: 32px; 
+    }
+
+    .container {
+        padding: 20px 15px; 
+    }
+
+    input[type="text"], input[type="button"] {
+        width: 100%; 
+        box-sizing: border-box;
+    }
+}
+
+.secondary-btn {
+    background-color: #6c757d !important;
+}
+
+.secondary-btn:hover {
+    background-color: #5a6268 !important;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.6); 
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.results-header span, .result-row span {
+    flex: 1;
+    text-align: center;
+}
+
+.results-header span:first-child, .result-row span:first-child {
+    text-align: left;
+    flex: 0.5;
+}
+
+.results-header span:last-child, .result-row span:last-child {
+    text-align: right;
+}
+
+#playerImage {
+    max-width: 150px;
+    display: block;
+    margin: 20px auto 0 auto;
+    animation: popIn 0.5s ease-out;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+
+body.dark-mode {
+    --bg-color: #1a1a2e;
+    --text-color: #e0e0e0;
+    --primary-color: #e94560; 
+    --card-bg: #16213e;
+}
+
+body.dark-mode input[type="text"], 
+body.dark-mode select {
+    background-color: #0f3460;
+    color: white;
+    border-color: #e94560;
+}
+
+body.dark-mode .modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+body.dark-mode .result-row {
+    border-bottom: 1px solid #2a2a4a;
+}
+
+body.dark-mode #results div:nth-child(even) {
+    background-color: #1a1a2e;
+}
+
+body.dark-mode #results div:first-child {
+    background-color: #ffd700;
+    color: #000;
+}
+
+.styled-select {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+    margin-bottom: 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+#mistakesCount {
+    color: #e94560;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+#restartBtn {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#restartBtn:hover {
+    transform: scale(1.05);
 }
