@@ -18,3 +18,5 @@ Tunnis loodud Typer Mängu täiustamise kodutöö
 Autor: Roland Piperal
 
 AI-d ega teiste koodi ei kasutanud
+
+(Leaderboards kahjuks ei tööta PHP põhjal, kuna ei saanud PHP serverit õigesti tööle, ning omakorda ei ole varem PHP-ga tegelenud. Kogu leaderboards süsteem on local storageiga ehitatud)
