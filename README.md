@@ -8,7 +8,7 @@ Skoori arvutus valem:
 
 ((correctLetter - incorrectLetter) / this.timer) * 100
 
-### Funktsionaalsus
+## Funktsionaalsus
 
 1. Erinevad fondid on kasutusel, kaasaarvatud Google fontid
 2. Võimalik on näha leaderboardsi vajutades "Leaderboards" nupule, ning võimalik on seda sulgeda uuesti "Leaderboards" nupule vajutades, või kui avatakse "Customization" menüü
@@ -20,9 +20,9 @@ Skoori arvutus valem:
 8. Leaderboardsidele on lisatud filtreerimis süsteem, filtreeri aja ja skoori vahel VÕI raskusastmete vahel
 9. On võimalik valida 4 erineva raskusastme vahel: Easy, Normal, Hard või Death Sentence. Mängu ajavõttu süsteem kohandub raskustasemest
 
-#### Kõik Muu
+## Kõik Muu
 Autor: Roland Piperal
-
 AI-d ega teiste koodi ei kasutanud
+
 
 (Leaderboards kahjuks ei tööta PHP põhjal, kuna ei saanud PHP serverit õigesti tööle, ning omakorda ei ole varem PHP-ga tegelenud. Kogu leaderboards süsteem on local storageiga ehitatud)
