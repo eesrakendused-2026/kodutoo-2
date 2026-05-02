@@ -35,7 +35,16 @@
         <button id="customizeBtn">Customization</button>
     </div>
     <div id="name">
-        <input type="button" id="startGame" value="START GAME">
+        <input type="button" id="startGame" value="START GAME"><br>
+        <div id="DifficultySelector">Difficulty: <select name="difficutly" id="difficulyDropdown">
+                <div id="dropdownContent">
+                    <option value="easy">Easy</option>
+                    <option value="normal">Normal</option>
+                    <option value="hard">Hard</option>
+                    <option value="death sentence">Death Sentence</option>
+                </div>
+            </select></div>
+
     </div>
     <div id="allContainer">
         <div id="wordContainer" class="container">
@@ -55,6 +64,18 @@
         </label>
     </div>
     <div id="leaderboardContainer" class="containerHidden">
+        <span>Sort by:</span>
+        <button class="sortBtn" id="score">Score</button>
+        <button class="sortBtn" id="time">Time</button>
+        <div>Or</div>
+        <div class="sortBtn" id="difficultySort">Difficulty:
+            <select name="difficutlySort" id="difficulySortDropdown">
+                <option value="easy">Easy</option>
+                <option value="normal">Normal</option>
+                <option value="hard">Hard</option>
+                <option value="death sentence">Death Sentence</option>
+            </select><button id="sortByDiff">Sort</button></div><br><br>
+        <div id="results"></div>
     </div>
     <div id="customizationContainer" class="containerHidden">
         <button class="color" id="white">Default Background</button>

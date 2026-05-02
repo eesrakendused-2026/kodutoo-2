@@ -30,7 +30,26 @@ body {
     font-weight: 400;
     font-style: normal;
     transition: .3s;
+    margin-bottom: 30px;
 }
+
+#name {
+    text-align: center;
+}
+
+#DifficultySelector {
+    font-size: 20px;
+    margin-bottom: -40px;
+}
+
+#difficulyDropdown {
+    font-size: 20px;
+    font-family: "Archivo Black", sans-serif;
+    border: none;
+    background-color: black;
+    color: white;
+}
+
 
 #startGame:hover {
     padding-bottom: 40px;
@@ -38,6 +57,7 @@ body {
     color: white;
     border-radius: 10px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 
@@ -51,6 +71,12 @@ body {
     padding-left: 0px;
     transition: .2s;
     padding-right: 14px;
+}
+
+#difficultySort{
+    padding-left: 0px;
+    float: left;
+
 }
 
 #customizeBtn {
@@ -112,27 +138,50 @@ body {
 body {
     counter-reset: section;
 }
-#leaderboardContainer>h1::before {
+
+.sortBtn {
+    font-family: "Archivo Black", sans-serif;
+    font-style: normal;
+    font-size: 15px;
+    transition: .2s;
+    text-align: center;
+    margin-right: 5px;
+    border: none;
+    transition: .5s;
+}
+
+.sortBtn:hover {
+    background-color: black;
+    color: white;
+    border: none;
+
+}
+
+#results {
+    font-size: 10px;
+}
+
+#results>h1::before {
     counter-increment: section;
     content: counter(section) ". ";
 }
 
-#leaderboardContainer>h1:first-child {
+#results>h1:first-child {
     color: rgb(245, 174, 44);
 }
 
 
-#leaderboardContainer>h1:nth-child(2) {
+#results>h1:nth-child(2) {
     color: rgb(179, 179, 179);
 }
 
-#leaderboardContainer>h1:nth-child(3) {
+#results>h1:nth-child(3) {
     color: rgb(104, 69, 4);
 }
 
-.leaderboardContainer>h1:nth-child(2):hover,
-.leaderboardContainer>h1:nth-child(3):hover,
-.leaderboardContainer>h1:nth-child(4):hover {
+.results>h1:nth-child(2):hover,
+.results>h1:nth-child(3):hover,
+.results>h1:nth-child(4):hover {
     color: black;
 }
 
