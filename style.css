@@ -1,9 +1,31 @@
-body{
-    margin:0;
-    padding:0;
+body {
+    margin: 0;
+    padding: 0;
+    /* background-color: #333; */
+    color: white;
+    font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-weight: 400;
+    font-style: normal;
+  	background: linear-gradient(-45deg, #0e0725, #5c03bc, #e536ab, #f4e5f0);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
 }
 
-.container{
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,24 +33,163 @@ body{
     flex-direction: column;
 }
 
-.container > div {
+.container>div {
     padding: 10px;
 }
 
-.container > input {
+.container>input {
     margin: 5px;
 }
 
-#info, #wordContainer, #counter{
+#wordContainer,
+#counter {
     display: none;
 }
 
-#word, #time{
-    font-size: 36px;
-    font-weight: 700;
+#word,
+#time {
+    font-family: "Dongle", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 100px;
 }
 
-#info{
-    min-height: 30px;
-    align-items: start;
+#gameName:hover {
+    text-shadow: 0 0 5px rgb(255, 255, 255);
+}
+
+#info {
+    font-family: "BBH Hegarty", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 80px;
+}
+
+button[hidden] {
+    display: none !important;
+}
+
+button {
+  align-items: center;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
+  text-transform: uppercase;
+  outline: 0;
+  border: 0;
+  padding: 1rem;
+}
+
+button:before {
+  background-color: #fff;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  margin-right: 10px;
+  transition: all .42s cubic-bezier(.25,.8,.25,1);
+  width: 0;
+}
+
+button:hover:before {
+  background-color: #fff;
+  width: 3rem;
+}
+
+#results, #score {
+    font-family: "Share Tech Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#name, #resultsHeading{
+    font-size: 50px;
+    margin: 0px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #333;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.closeModal {
+  color: #aaa;
+  float: right;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.closeModal:hover,
+.closeModal:focus {
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.results-table {
+    width: 100%;
+    max-width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-family: inherit;
+    color: white;
+    text-align: left;
+}
+
+/* Lahtrite ja pealkirjade vahed */
+.results-table th, 
+.results-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(143, 70, 252, 0.4); /* Õrn lilla joon ridade vahel */
+}
+
+/* Tabeli päise (pealkirjade) kujundus */
+.results-table th {
+    background-color: rgba(143, 70, 252, 0.2); /* Õrn lilla taust */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* Ridadele hiirega peale minnes tekib õrn taust (Hover efekt) */
+.results-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* VÄIKE BOONUS: Esikolmiku värvimine! */
+.results-table tbody tr:nth-child(1) td {
+    color: #FFD700; /* Kuldne */
+    font-weight: bold;
+}
+.results-table tbody tr:nth-child(2) td {
+    color: #C0C0C0; /* Hõbedane */
+    font-weight: bold;
+}
+.results-table tbody tr:nth-child(3) td {
+    color: #CD7F32; /* Pronks */
+    font-weight: bold;
 }

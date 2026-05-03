@@ -1,37 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
+    <script type="module" src="typer.js"></script>
+    <script type="module" src="modal.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BBH+Hegarty&family=Dongle&family=Share+Tech+Mono&display=swap" rel="stylesheet">    
     <title>Typer</title>
 </head>
+
 <body>
+    <audio id="myAudio" src="./media/background_music.mp3" loop></audio>
+    <audio src="./media/victory_sound.mp3" id="victoryAudio"></audio>
+    <audio src="./media/correct_sound.mp3" id="correctAudio"></audio>
+    <audio src="./media/wrong_sound.mp3" id="wrongAudio"></audio>
+    <audio src="./media/typing_sound.mp3" id="typingAudio"></audio>
+
+    <div id="info" class="container">
+        <div id="gameName">Typer!</div>
+        <div id="wordcount"></div>
+    </div>
+
     <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+        <h2>Logi sisse, et mängida!</h2>
+        <button id="loginButton">Logi sisse Google'iga</button>
     </div>
 
     <div id="counter" class="container">
         <div id="time"></div>
     </div>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
-    </div>
-
     <div id="wordContainer" class="container">
         <div id="word"></div>
         <div id="score"></div>
+        <h3 id="wpmText" style="margin-bottom: 10px; color: #FFD700;"></h3>
+        <img id="speedImage" src="" alt="" style="max-width: 120px; border-radius: 10px;">
     </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+    <div id="buttonContainer" class="container">
+        <button id="playAgain" style="margin-top: 20px;" hidden>Mängi uuesti</button>
+        <button id="changeUser" style="margin-top: 10px;" hidden>Logi välja</button>
+        <button id="openModal" style="margin-top: 10px;">Tulemused</button>
+    </div>    
+
+    <div id="resultsContainer" class="modal">
+        
+        <div class="modal-content">
+            <span class="closeModal">&times;</span>
+            <h2 id="resultsHeading">Tulemused</h2>
+            <div id="results"></div>
         </div>
+
+        
     </div>
-    
+
 </body>
+
+
+
 </html>
