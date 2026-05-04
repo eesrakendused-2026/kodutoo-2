@@ -1,3 +1,34 @@
+## Typer mängu muudatused
+
+### Greeny link:
+greeny.cs.tlu.ee/~leitalur/eesrakendused/kodutoo-2
+
+### 1. Visuaalne disain ja kasutajakogemus
+*   **Google Fonts integratsioon**: Rakenduses on kasutusel 'Roboto' põhiteksti jaoks, et tagada kaasaegne ja loetav välimus.
+*   **Täielik CSS uuendus**: Kõik algsed värvid, suurused ja elementide mõõtmed on asendatud uue cyberpunk-stiilis tumeda teemaga.
+*   **Mobiilisõbralikkus (Responsive Design)**: Kasutusele on võetud CSS *media queries*, mis kohandavad mänguala ja tekstisuurusi vastavalt seadme ekraani laiusele.
+*   **Täiustatud CSS loogika**: Rakendatud on vähemalt 5 erinevat *pseudo-class*'i (nt `:hover`, `:active`, `:focus`, `:nth-child`, `:first-child`), et muuta liides dünaamilisemaks.
+
+### 2. Tulemuste süsteem ja edetabel
+*   **Modaalaken**: Tulemused ja edetabel kuvatakse eraldi modal-aknas, mis avaneb nupule vajutades ja sulgub "x" märgiga või väljaspool akent klikkides.
+*   **Struktureeritud andmed**: Tulemused ei ole enam tühikutega eraldatud tekst, vaid paigutatud selgetesse tulpadesse koos pealkirjadega (Koht, Nimi, Aeg, WPM).
+*   **Visuaalne tagasiside (Speed Rank)**: Vastavalt trükkimiskiirusele (WPM) kuvatakse tulemuste aknas vastav pilt ja hinnang:
+    *   **Tigu**: < 30 WPM.
+    *   **Jänes**: 30 - 60 WPM.
+    *   **Gepard**: > 60 WPM.
+
+### 3. Audiovisuaalsed efektid
+*   **Heliefektid**: Mängule on lisatud neli erinevat heliklippi:
+    *   `start.mp3`: Mängu loenduri algus.
+    *   `key.mp3`: Iga õige tähe trükkimine.
+    *   `end.mp3`: Mängu lõpetamine.
+    *   `top.mp3`: Edetabeli esikolmikusse jõudmine.
+
+### 4. Uued lisafunktsioonid (Features)
+*   **Elude süsteem**: Mängijal on 5 elu. Iga vale tähetrükk vähendab elude arvu, lisades mängule strateegilise mõõtme.
+*   **Progressiriba**: Ekraani ülaosas on dünaamiline riba, mis täitub reaalajas vastavalt sellele, kui suur osa tekstist on juba trükitud.
+*   **Reaalajas WPM-i näidik**: Trükkimise ajal arvutatakse ja kuvatakse kasutajale jooksvalt tema keskmist kiirust (sõna minutis).
+
 # kodutoo-2
 Täiusta tunnis loodud typer'i rakendust.
 
