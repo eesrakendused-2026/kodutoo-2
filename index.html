@@ -1,37 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="firebase.js"></script>
+    <script>firebase.initializeApp(firebaseConfig);</script>
     <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <title>Typer</title>
 </head>
 <body>
+
+<header>
+    <h1>TRÜKKIMISE MÄNG</h1>
+    <div class="auth-buttons">
+        <button id="googleLogin" class="btn">Logi sisse Google'iga</button>
+        <button id="logout" class="btn" style="display:none;">Logi välja</button>
+    </div>
+    <div id="lives-display">Elud: ❤️❤️❤️❤️❤️</div>
+</header>
+
+<main class="main-content">
     <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+        <label for="username">Mängija nimi:</label>
+        <input type="text" id="username" placeholder="Sinu nimi...">
+        <button id="submitname" class="btn-primary">Alusta mängu</button>
     </div>
 
-    <div id="counter" class="container">
-        <div id="time"></div>
-    </div>
-
-    <div id="info" class="container">
-        <div id="wordcount"></div>
-    </div>
-
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
-    </div>
-
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+    <div id="counter" class="container" style="display:none;">
+        <div id="time-circle">
+            <span id="time">3</span>
         </div>
     </div>
-    
+
+    <div id="game-area" style="display:none;">
+        <div id="info" class="game-info">
+            <div id="wordcount">Sõnu: 0/5</div>
+            <div class="progress-bar"><div id="progress-fill"></div></div>
+        </div>
+
+        <div id="wordContainer" class="container">
+            <div id="word">Ootel...</div>
+            <div id="live-wpm">WPM: 0</div>
+        </div>
+    </div>
+
+    <button id="showResultsBtn" class="btn">Vaata edetabelit</button>
+
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>EDETABEL</h2>
+            <div id="results-header">
+            </div>
+            <div id="results-list"></div>
+            
+            <div id="speed-rank">
+                <p id="rank-text"></p>
+                <img id="rank-img" src="" alt="Speed Rank" style="display:none; max-width: 150px;">
+            </div>
+            
+            <button id="restart" class="btn-primary">Proovi uuesti</button>
+        </div>
+    </div>
+</main>
+
 </body>
 </html>
