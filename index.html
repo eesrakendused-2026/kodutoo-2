@@ -3,35 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <title>Typer</title>
 </head>
 <body>
-    <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+    <div id="topbar" class="container">
+        <h1>Typer</h1>
+        <button id="openResults" class="primary">Vaata tulemusi</button>
     </div>
 
-    <div id="counter" class="container">
-        <div id="time"></div>
+    <div id="name" class="container card">
+        <label for="username">Sisesta oma nimi</label>
+        <input type="text" id="username" placeholder="Sinu nimi">
+        <input type="button" value="Salvesta" id="submitname" class="primary">
     </div>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
+    <div id="counter" class="container card">
+        <div id="time" aria-live="polite"></div>
     </div>
 
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
-    </div>
-
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+    <div id="info" class="container info-grid">
+        <div class="info-card">
+            <h2>Nimi</h2>
+            <p id="playerName">-</p>
+        </div>
+        <div class="info-card">
+            <h2>Sõnade trükkimine</h2>
+            <p id="wordcount">0/0</p>
+        </div>
+        <div class="info-card">
+            <h2>Kiirus</h2>
+            <p id="speedInfo">-</p>
+        </div>
+        <div class="info-card">
+            <h2>Progress</h2>
+            <div class="progress-wrap"><div id="progressBar"></div></div>
         </div>
     </div>
-    
+
+    <div id="wordContainer" class="container card">
+        <div class="word-box">
+            <h2>Sõna</h2>
+            <div id="word" class="word-text"></div>
+        </div>
+        <div id="resultImage" class="speed-image"></div>
+    </div>
+
+    <div class="container actions">
+        <button id="restartBtn" class="secondary">Alusta uuesti</button>
+    </div>
+
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Viimased tulemused</h2>
+            <div id="results"></div>
+        </div>
+    </div>
 </body>
 </html>
