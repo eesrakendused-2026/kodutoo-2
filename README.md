@@ -1,3 +1,10 @@
+Typer rakendus mortal kombat stiilis, sealt ka nimi mortal typer
+greeny link: https://greeny.cs.tlu.ee/~aaisting/2026_kevad_semester/eesrakenduste_arendamin/mortaltyper/
+
+
+
+
+
 # kodutoo-2
 Täiusta tunnis loodud typer'i rakendust.
 
