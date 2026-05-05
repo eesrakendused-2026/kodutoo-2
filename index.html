@@ -1,37 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
-    <title>Typer</title>
+    <title>Typer — Trükkimiskiiruse test</title>
 </head>
 <body>
-    <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+
+<div class="app-wrapper">
+
+    <header class="app-header">
+        <div class="app-logo">typer<span>.ee</span></div>
+        <div class="header-controls">
+            <button class="btn-icon" id="themeToggle" title="Vaheta teemat">☀️</button>
+            <button class="btn btn-ghost" id="showResults">🏆 Edetabel</button>
+        </div>
+    </header>
+
+    <div id="loadingScreen" class="card">
+        <div class="loader"></div>
+        <span>Laen sõnu...</span>
     </div>
 
-    <div id="counter" class="container">
-        <div id="time"></div>
-    </div>
+    <div id="name" class="card">
+        <h1 class="name-title">Tere tulemast <span>typer</span>'i!</h1>
+        <p class="name-subtitle">Testi oma trükkimiskiirust eesti keeles.</p>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
-    </div>
+        <div class="name-form">
+            <input
+                type="text"
+                id="username"
+                placeholder="Sisesta oma nimi..."
+                maxlength="20"
+                autocomplete="off"
+            >
+            <span class="error-msg" id="nameError">
+                ⚠️ Palun sisesta nimi enne alustamist.
+            </span>
 
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
-    </div>
+            <!-- Feature 2: Difficulty selector -->
+            <div class="difficulty-row">
+                <label for="difficultySelect">Raskusaste:</label>
+                <select id="difficultySelect">
+                    <option value="3">Lihtne (3 sõna)</option>
+                    <option value="5" selected>Keskmine (5 sõna)</option>
+                    <option value="8">Raske (8 sõna)</option>
+                    <option value="12">Meister (12 sõna)</option>
+                </select>
+            </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+            <button class="btn btn-primary" id="submitname">
+                Alusta mängu →
+            </button>
         </div>
     </div>
-    
+
+    <div id="counter" class="card">
+        <span class="countdown-label">Alustame</span>
+        <div id="time">3</div>
+    </div>
+
+    <div id="info">
+        <span id="wordcount"></span>
+        <div id="progressDots"></div>
+    </div>
+
+    <div id="liveStats">
+        <span>⏱ <span id="liveTimer">0.0s</span></span>
+        <span id="streakDisplay"></span>
+        <span style="color: var(--text-muted); font-size:0.8rem;">
+            Trüki täpselt!
+        </span>
+    </div>
+
+    <div id="wordContainer" class="card">
+        <div id="word"></div>
+        <p class="type-hint">↑ Trüki sõna klaviatuuriga</p>
+    </div>
+
+    <div id="endScreen" class="card">
+        <div id="highScoreBanner">🎉 Uus rekord! Tubli!</div>
+
+        <h2 class="end-title">Mäng läbi!</h2>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-label">⏱ Aeg</span>
+                <span class="stat-value" id="endTime">—</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">⚡ Kiirus</span>
+                <span class="stat-value" id="endWpm">—</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">🎯 Täpsus</span>
+                <span class="stat-value" id="endAccuracy">—</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">🔥 Parim streak</span>
+                <span class="stat-value" id="endStreak">—</span>
+            </div>
+        </div>
+
+        <div class="speed-tier">
+            <img class="speed-img" id="speedImg" src="" alt="">
+            <span id="speedEmoji" style="font-size:2rem"></span>
+            <div class="speed-info">
+                <div class="speed-tier-label">Sinu tase</div>
+                <div id="speedLabel" style="font-size:1.3rem;font-weight:700"></div>
+                <div id="speedMsg"></div>
+            </div>
+        </div>
+
+        <div class="end-actions">
+            <button class="btn btn-primary" id="restartBtn">
+                🔄 Mängi uuesti
+            </button>
+            <button class="btn btn-ghost" id="showResults2"
+                onclick="window.typer.openModal()">
+                🏆 Vaata edetabelit
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- viide: https://www.w3schools.com/howto/howto_css_modals.asp -->
+<div id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true"
+         aria-label="Edetabel">
+        <div class="modal-header">
+            <h2 class="modal-title">🏆 TOP 20 Edetabel</h2>
+            <button class="modal-close" id="modalClose"
+                    aria-label="Sulge">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="results-header">
+                <span>Koht</span>
+                <span>Nimi</span>
+                <span style="text-align:right">Aeg</span>
+                <span style="text-align:right">WPM</span>
+            </div>
+            <div id="results"></div>
+        </div>
+    </div>
+</div>
+
+<script src="typer.js" defer></script>
 </body>
 </html>
