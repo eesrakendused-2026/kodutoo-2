@@ -3,15 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
-    <link rel="stylesheet" href="style.css">
     <title>Typer</title>
+
+    <script type="module" src="./typer.js?v=1814" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="./style.css?v=1814">
 </head>
 <body>
+
+    <button id="openSidebarBtn" class="sidebar-toggle" type="button">
+        Näita tulemusi
+    </button>
+
+    <div id="sidebarOverlay" class="overlay"></div>
+
+    <div id="resultsSidebar" class="topbar">
+        <div class="topbar-header">
+            <h2>TOP 20</h2>
+            <button id="closeSidebarBtn" class="close-btn" type="button">
+                &times;
+            </button>
+        </div>
+
+        <div id="speedBadge" class="speed-badge" style="display: none;">
+            <img
+                id="speedImage"
+                src=""
+                alt="Typing speed level image"
+            >
+            <div class="speed-texts">
+                <div class="speed-label">Sinu tase</div>
+                <div id="speedTitle" class="speed-title"></div>
+                <div
+                    id="speedDescription"
+                    class="speed-description"
+                ></div>
+            </div>
+        </div>
+
+        <div class="results-head">
+            <div>Koht</div>
+            <div>Nimi</div>
+            <div>Aeg</div>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
     <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+        <button id="googleLoginBtn" type="button">
+            Logi sisse Google kontoga
+        </button>
+        <button id="logoutBtn" type="button" style="display: none;">
+            Logi välja / Vaheta kasutajat
+        </button>
+        <div id="userInfo"></div>
+    </div>
+
+    <div id="controls" class="container">
+        <div class="controls-row">
+            <label for="difficultySelect">Raskusaste:</label>
+            <select id="difficultySelect">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+
+            <button id="soundToggleBtn" type="button">Heli: sees</button>
+        </div>
+    </div>
+
+    <div id="progressContainer" class="container">
+        <div class="progress-wrapper">
+            <div id="progressBar"></div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 10px;">
+        <button id="restartBtn" type="button" style="display: none;">
+            Alusta uuesti
+        </button>
     </div>
 
     <div id="counter" class="container">
@@ -27,11 +105,5 @@
         <div id="score"></div>
     </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
-        </div>
-    </div>
-    
 </body>
 </html>

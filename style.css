@@ -1,34 +1,541 @@
-body{
-    margin:0;
-    padding:0;
+* {
+    box-sizing: border-box;
 }
 
-.container{
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Archivo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(180deg, #eaf4ff 0%, #dcecff 100%);
+    color: #12304f;
+}
+
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
+    min-height: 100px;
     flex-direction: column;
+    padding: 18px 24px;
+    text-align: center;
 }
 
-.container > div {
-    padding: 10px;
+#name {
+    padding-top: 96px;
+    gap: 10px;
 }
 
-.container > input {
-    margin: 5px;
-}
-
-#info, #wordContainer, #counter{
+#info,
+#wordContainer,
+#counter {
     display: none;
 }
 
-#word, #time{
-    font-size: 36px;
+#word,
+#time {
+    font-size: 56px;
+    font-weight: 700;
+    color: #0f3d66;
+    text-align: center;
+    word-break: break-word;
+    letter-spacing: 0.02em;
+}
+
+#score {
+    margin-top: 14px;
+    font-size: 20px;
+    color: #406a91;
+}
+
+#wordcount,
+#userInfo {
+    font-size: 20px;
+    color: #234e78;
+    font-weight: 600;
+}
+
+/*Kasutasin AI abi*/
+.sidebar-toggle {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 1000;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #1f6fba 0%, #12539a 100%);
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(18, 83, 154, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+#googleLoginBtn,
+#logoutBtn,
+#restartBtn,
+#soundToggleBtn {
+    padding: 14px 22px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #2d7dd2 0%, #1e63ad 100%);
+    color: white;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 6px;
+    box-shadow: 0 8px 18px rgba(30, 99, 173, 0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 37, 64, 0.35);
+    z-index: 998;
+}
+
+/* Kasutasin AI abi */
+.topbar {
+    position: fixed;
+    top: -100vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(960px, calc(100vw - 40px));
+    max-height: 76vh;
+    overflow-y: auto;
+    background: #f7fbff;
+    box-shadow: 0 18px 40px rgba(25, 72, 120, 0.22);
+    border: 1px solid #cfe3f7;
+    border-radius: 22px;
+    z-index: 999;
+    padding: 28px 30px 24px 30px;
+    transition: top 0.35s ease;
+}
+
+.topbar.show {
+    top: 28px;
+}
+
+.topbar-header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    min-height: 54px;
+}
+
+.topbar-header h2 {
+    margin: 0;
+    font-size: 38px;
+    color: #0f3d66;
+    text-align: center;
+    letter-spacing: 0.02em;
+}
+
+/*Kasutasin AI abi*/
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background: #dcebfa;
+    color: #184b79;
+    font-size: 30px;
+    line-height: 1;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.speed-badge {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(180deg, #eef7ff 0%, #e4f1ff 100%);
+    border: 1px solid #c8def5;
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.speed-badge img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 16px;
+    flex-shrink: 0;
+    background: #d9eaf9;
+    display: block;
+    border: 3px solid #c5dcf3;
+}
+
+.speed-texts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.speed-label {
+    font-size: 13px;
+    color: #4d78a1;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     font-weight: 700;
 }
 
-#info{
-    min-height: 30px;
-    align-items: start;
+.speed-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #0d3b66;
+}
+
+.speed-description {
+    font-size: 18px;
+    color: #41688d;
+    line-height: 1.5;
+}
+
+/* Kasutasin AI abi */
+.results-head {
+    display: grid;
+    grid-template-columns: 100px 1fr 150px;
+    gap: 18px;
+    padding: 0 18px 14px 18px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #5a82a8;
+    border-bottom: 2px solid #d3e4f4;
+}
+
+#results {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/*Kasutasin AI abi*/
+.result-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 150px;
+    gap: 18px;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #d9e8f7;
+    border-radius: 18px;
+    padding: 16px 18px;
+    box-shadow: 0 8px 18px rgba(40, 96, 150, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.result-rank {
+    font-size: 24px;
+    font-weight: 700;
+    color: #12539a;
+}
+
+.result-name {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/*Kasutasin AI abi*/
+.result-name .label,
+.result-time .label {
+    font-size: 12px;
+    color: #6f92b5;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-weight: 700;
+}
+
+.result-name .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #173f68;
+}
+
+.result-time {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.result-time .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #173f68;
+}
+
+#controls {
+    min-height: auto;
+    padding-top: 0;
+    padding-bottom: 10px;
+}
+
+.controls-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: #eef7ff;
+    border: 1px solid #c8def5;
+    padding: 14px 18px;
+    border-radius: 16px;
+    box-shadow: 0 8px 18px rgba(40, 96, 150, 0.08);
+}
+
+.controls-row label {
+    font-size: 16px;
+    font-weight: 700;
+    color: #184b79;
+}
+
+.controls-row select {
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #bfd8f1;
+    font-size: 15px;
+    font-family: inherit;
+    color: #12304f;
+    background: #ffffff;
+}
+
+#progressContainer {
+    min-height: auto;
+    padding-top: 4px;
+}
+
+.progress-wrapper {
+    width: min(520px, 90vw);
+    height: 18px;
+    background: #d7e9fa;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid #bdd7f0;
+}
+
+/*Kasutasin AI abi*/
+#progressBar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #57a5ff 0%, #1565c0 100%);
+    transition: width 0.2s ease;
+}
+
+button,
+select {
+    font-family: inherit;
+}
+
+/* Kasutasin AI abi: pseudo-classid */
+.sidebar-toggle:hover,
+#googleLoginBtn:hover,
+#logoutBtn:hover,
+#restartBtn:hover,
+#soundToggleBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(18, 83, 154, 0.28);
+    background: linear-gradient(135deg, #175d9e 0%, #0e457f 100%);
+}
+
+.sidebar-toggle:active,
+#googleLoginBtn:active,
+#logoutBtn:active,
+#restartBtn:active,
+#soundToggleBtn:active,
+.close-btn:active {
+    transform: scale(0.97);
+}
+
+.sidebar-toggle:focus,
+#googleLoginBtn:focus,
+#logoutBtn:focus,
+#restartBtn:focus,
+#soundToggleBtn:focus,
+.close-btn:focus,
+#difficultySelect:focus {
+    outline: 3px solid #7ec3ff;
+    outline-offset: 3px;
+}
+
+.result-row:first-child {
+    border: 2px solid #5aa9ff;
+    background: linear-gradient(180deg, #eef7ff 0%, #dfefff 100%);
+}
+
+.result-row:last-child {
+    border-bottom: 4px solid #7aaee0;
+}
+
+.result-row:nth-child(even) {
+    background: #f3f9ff;
+}
+
+.result-row:nth-child(odd) {
+    background: #ffffff;
+}
+
+.result-row:not(:first-child) {
+    border-color: #d9e8f7;
+}
+
+.result-row:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(40, 96, 150, 0.12);
+}
+
+.close-btn:hover {
+    background: #bcdcff;
+    color: #0d3b66;
+}
+
+/* Kasutasin AI abi: mobiilivaade */
+@media screen and (max-width: 600px) {
+    body {
+        padding-bottom: 20px;
+    }
+
+    .container {
+        min-height: auto;
+        padding: 16px;
+    }
+
+    #name {
+        padding-top: 82px;
+    }
+
+    #googleLoginBtn,
+    #logoutBtn,
+    #restartBtn,
+    #soundToggleBtn {
+        width: 100%;
+        max-width: 320px;
+        font-size: 15px;
+        padding: 14px 16px;
+        margin: 6px 0;
+    }
+
+    .sidebar-toggle {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+        padding: 14px 16px;
+        font-size: 15px;
+        border-radius: 12px;
+    }
+
+    .topbar {
+        width: calc(100vw - 12px);
+        max-height: 86vh;
+        padding: 18px 14px 14px 14px;
+        border-radius: 16px;
+    }
+
+    .topbar.show {
+        top: 8px;
+    }
+
+    .topbar-header {
+        min-height: 42px;
+        margin-bottom: 14px;
+    }
+
+    .topbar-header h2 {
+        font-size: 28px;
+    }
+
+    .close-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 26px;
+    }
+
+    .speed-badge {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .speed-badge img {
+        width: 100%;
+        height: 190px;
+    }
+
+    .speed-title {
+        font-size: 24px;
+    }
+
+    .speed-description {
+        font-size: 16px;
+    }
+
+    .results-head {
+        display: none;
+    }
+
+    .result-row {
+        grid-template-columns: 56px 1fr;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 16px;
+    }
+
+    .result-rank {
+        grid-row: span 2;
+        align-self: start;
+        font-size: 18px;
+    }
+
+    .result-time {
+        grid-column: 2;
+        align-items: flex-start;
+    }
+
+    .result-name .value,
+    .result-time .value {
+        font-size: 17px;
+    }
+
+    #word,
+    #time {
+        font-size: 34px;
+        line-height: 1.2;
+    }
+
+    #wordcount,
+    #userInfo,
+    #score {
+        font-size: 16px;
+    }
+
+    .controls-row {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .controls-row select {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .progress-wrapper {
+        width: 100%;
+    }
 }

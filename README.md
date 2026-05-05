@@ -61,4 +61,10 @@ Tagasisidet saab otse *pull request*'i millele ootan Sinupoolseid kommentaare/m�
 * Boonuspunktid:
     * Loomingulisus (NB! nõuded peavad olema täidetud)
 
-
+1. Kasutatud on Archivo fonti. 
+2. Leht näitab tulemusi vajutades nupule "Näita tulemusi" ning need kaovad vajutades ristile.
+3. Tulemuste tabelis on vastavalt tulemusele erinev pilt (kolm erinevat astet).
+4. Mobiilversioon on tehtud kasutades AI-d.
+5. Kasutatud on 4 erinevat heliklippi: mängu algus, õigesti vajutatud täht, valesti vajutatud täht ja mängu lõpp
+6. 3 uut feature'it on: saab muuta raskustaset - easy, medium, hard. Heli saab maha panna. Mängides on progress bar mis näitab umbes kaugel oled
+Autor: Patrick Jurs
