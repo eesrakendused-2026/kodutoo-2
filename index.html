@@ -1,37 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+
     <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
+
     <title>Typer</title>
 </head>
+
 <body>
-    <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
-    </div>
 
-    <div id="counter" class="container">
-        <div id="time"></div>
-    </div>
+<div id="name" class="container">
+    <label>Sisesta oma nimi</label>
+    <input type="text" id="username">
+    <input type="button" value="Alusta" id="submitname">
+</div>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
-    </div>
+<div id="counter" class="container">
+    <div id="time"></div>
+</div>
 
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
-    </div>
+<div id="info" class="container">
+    <div id="wordcount"></div>
+</div>
 
-    <div id="resultsContainer" class="container">
+<div id="wordContainer" class="container">
+    <div id="word"></div>
+</div>
+
+<div class="container">
+    <button id="openResults">Näita tulemusi</button>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modalContent">
+        <span id="closeModal">X</span>
         <h2>TOP 20</h2>
-        <div id="results">
-        </div>
+        <div id="results"></div>
+        <img id="resultImage" width="150">
     </div>
-    
+</div>
+
+<audio id="startSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+<audio id="typeSound" src="https://www.soundjay.com/button/beep-01a.wav"></audio>
+<audio id="endSound" src="https://www.soundjay.com/button/beep-10.wav"></audio>
+<audio id="winSound" src="https://www.soundjay.com/button/beep-09.wav"></audio>
+
 </body>
 </html>
