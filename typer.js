@@ -4,7 +4,7 @@ import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebas
 
 // Firebase seadistus
 const firebaseConfig = {
-    apiKey: "AIzaSyB51fZ1UX7NuDuExT-GLJ9HEORlbOhLxFo",
+    apiKey: "xxx", //security pärast eemaldatud
     authDomain: "typer-4c796.firebaseapp.com",
     databaseURL: "https://typer-4c796-default-rtdb.europe-west1.firebasedatabase.app/",
     projectId: "typer-4c796",
