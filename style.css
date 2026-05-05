@@ -1,6 +1,18 @@
+@keyframes flashGreen {
+    0%   { background-color: rgba(46, 204, 113, 0.5); }
+    100% { background-color: transparent; }
+}
+
+.flash-correct {
+    animation: flashGreen 0.35s ease-out;
+    border-radius: 6px;
+}
+
 body{
     margin:0;
     padding:0;
+    font-family: 'Raleway', sans-serif;
+    background-color: #f0f4f8;
 }
 
 .container{
@@ -12,11 +24,11 @@ body{
 }
 
 .container > div {
-    padding: 10px;
+    padding: 15px;
 }
 
 .container > input {
-    margin: 5px;
+    margin: 8px;
 }
 
 #info, #wordContainer, #counter{
@@ -24,11 +36,255 @@ body{
 }
 
 #word, #time{
-    font-size: 36px;
+    font-size: 48px;
     font-weight: 700;
+    color: #1e3c72;
 }
 
 #info{
     min-height: 30px;
     align-items: start;
+    font-size: 16px;
+    color: #2a5298;
+}
+
+#resultsContainer {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30, 60, 114, 0.5);
+}
+
+#resultsContainer.show {
+    display: block;
+}
+
+#modalContent {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 25px;
+    border: 2px solid #2a5298;
+    width: 80%;
+    max-width: 600px;
+    max-height: 80vh;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(42, 82, 152, 0.15);
+    display: flex;
+    flex-direction: column;
+}
+
+#modalContent h2 {
+    color: #1e3c72;
+    margin-top: 0;
+}
+
+.user-score-box {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#scoreContent {
+    color: white;
+}
+
+.score-image {
+    width: 110px;
+    height: 110px;
+    border-radius: 10px;
+    margin: 12px auto;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.score-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.score-time {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.score-category {
+    font-size: 15px;
+    opacity: 0.95;
+    margin-top: 8px;
+}
+
+.close {
+    color: #2a5298;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #1e3c72;
+}
+
+#showResultsBtn, #playAgainBtn {
+    margin-top: 20px;
+    padding: 12px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ff8c42;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+#showResultsBtn:hover, #playAgainBtn:hover {
+    background-color: #ff7a1f;
+}
+
+#results {
+    margin-top: 10px;
+    max-height: 60vh;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.results-header {
+    display: grid;
+    grid-template-columns: 40px 1fr 80px;
+    gap: 15px;
+    padding: 12px;
+    font-weight: bold;
+    border-bottom: 3px solid #2a5298;
+    color: #1e3c72;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.result-row {
+    display: grid;
+    grid-template-columns: 40px 1fr 80px;
+    gap: 15px;
+    padding: 12px;
+    align-items: center;
+    border-bottom: 1px solid #d4e1f5;
+}
+
+.result-row:hover {
+    background-color: #e8f0f8;
+}
+
+.result-rank {
+    font-weight: bold;
+    color: #ff8c42;
+    font-size: 16px;
+}
+
+.result-name {
+    font-size: 15px;
+    color: #1e3c72;
+}
+
+.result-time {
+    text-align: right;
+    font-weight: bold;
+    color: #2a5298;
+    font-size: 15px;
+}
+
+#username:hover {
+    border-color: #2a5298;
+}
+
+#username:focus {
+    outline: 2px solid #ff8c42;
+    border-color: #ff8c42;
+}
+
+#submitname:hover {
+    background-color: #ff7a1f;
+    color: #fff;
+}
+
+#submitname:active {
+    transform: scale(0.98);
+}
+
+.result-row:nth-child(even) {
+    background-color: #f7fbff;
+}
+
+.result-row:first-child {
+    border-left: 4px solid #ff8c42;
+}
+
+.result-row:last-child {
+    border-bottom: 2px solid #2a5298;
+}
+
+.result-row:not(:hover) .result-time {
+    opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+    #word, #time {
+        font-size: 30px;
+    }
+
+    .container {
+        min-height: 120px;
+        padding: 10px;
+    }
+
+    #username {
+        width: 80%;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    #submitname {
+        width: 80%;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    #modalContent {
+        width: 93%;
+        margin: 3% auto;
+        padding: 16px;
+        max-height: 90vh;
+    }
+
+    .score-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .score-time {
+        font-size: 22px;
+    }
+
+    .results-header,
+    .result-row {
+        grid-template-columns: 32px 1fr 60px;
+        gap: 8px;
+        padding: 10px 8px;
+        font-size: 13px;
+    }
+
+    #showResultsBtn, #playAgainBtn {
+        width: 80%;
+        padding: 14px;
+        font-size: 16px;
+        display: block;
+        margin: 10px auto 0;
+    }
 }
