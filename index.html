@@ -3,15 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
+    <script type="module" src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Typer</title>
 </head>
 <body>
+    <button id="themeToggle" class="top-corner-btn">🌙 Teema</button>
+    <button id="musicToggle" class="top-corner-btn" style="right: 120px;">🔊 Muusika</button>
     <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+        <button id="googleLoginBtn">Logi sisse Google kontoga</button>
+        <button id="logoutBtn" style="display: none; margin-left: 10px;">Logi välja / Vaheta kasutajat</button>
+        <div id="userInfo" style="margin-top: 10px; font-weight: bold;"></div>
+    </div>
+
+    <div style="text-align: center; margin-top: 10px;">
+        <button id="restartBtn" style="display: none;">Alusta uuesti</button>
     </div>
 
     <div id="counter" class="container">
@@ -23,15 +32,27 @@
     </div>
 
     <div id="wordContainer" class="container">
+        <div id="progressContainer">
+            <div id="progressBar"></div>
+        </div>
         <div id="word"></div>
         <div id="score"></div>
     </div>
 
     <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+        <button id="openBtn">Kuva tulemused</button>
+    
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>TOP 20 tulemused</h2>
+                <div id="speedVisual" style="text-align: center; margin-bottom: 15px;">
+                    <img id="speedImage" src="" alt="" style="width: 100px; height: 100px; display: none;">
+                    <h3 id="speedCategory"></h3>
+                </div>
+                <div id="results"></div>
+            </div>
         </div>
     </div>
-    
 </body>
 </html>
