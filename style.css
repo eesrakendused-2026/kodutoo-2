@@ -1,34 +1,102 @@
-body{
-    margin:0;
-    padding:0;
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url(retro.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.container{
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
+    min-height: 140px;
     flex-direction: column;
+    width: 100%;
+    padding-top: 20px;
+    font-family: "Michroma", sans-serif;
+    font-style: normal;
 }
 
-.container > div {
+.container>div {
     padding: 10px;
 }
 
-.container > input {
+.container>input {
     margin: 5px;
 }
 
-#info, #wordContainer, #counter{
+#resultsContainer {
+    display: none;
+    position: fixed;
+    top: 38px;
+    right: 20px;
+    flex-direction: column;
+    border: 10px ridge purple;
+    background: #db7df5;
+    background: linear-gradient(90deg, rgba(219, 125, 245, 1) 36%, rgba(209, 209, 71, 1) 68%, rgba(232, 218, 218, 1) 100%);
+    height: auto;
+    width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+#resultsContainer.active {
+    display: block !important;
+}
+
+#name {
+    position: relative;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px ridge purple;
+    background: #db7df5;
+    background: linear-gradient(90deg, rgba(219, 125, 245, 1) 36%, rgba(209, 209, 71, 1) 68%, rgba(232, 218, 218, 1) 100%);
+    width: 250px;
+}
+
+#info,
+#wordContainer,
+#counter {
     display: none;
 }
 
-#word, #time{
+#word,
+#time {
     font-size: 36px;
     font-weight: 700;
 }
 
-#info{
-    min-height: 30px;
-    align-items: start;
+#info {
+    flex-direction: row !important;
+    gap: 50px; 
+    align-items: center;
+    min-height: 60px;
+    border: 10px ridge purple;
+    background: #db7df5;
+    background: linear-gradient(90deg, rgba(219, 125, 245, 1) 36%, rgba(209, 209, 71, 1) 68%, rgba(232, 218, 218, 1) 100%);
+    width: 300px;
+    font-family: "Michroma", sans-serif;
+    font-style: normal;
+}
+
+#leaderboard {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    border: 10px ridge purple;
+    background: #db7df5;
+    background: linear-gradient(90deg, rgba(219, 125, 245, 1) 36%, rgba(209, 209, 71, 1) 68%, rgba(232, 218, 218, 1) 100%);
+    width: 250px;
+    font-family: "Michroma", sans-serif;
+    font-style: normal;
+}
+
+@media (min-width: 600px) {
+  .header {grid-area: 1 / span 6;}
+  .menu {grid-area: 2 / span 1;}
+  .content {grid-area: 2 / span 4;}
+  .facts {grid-area: 2 / span 1;}
+  .footer {grid-area: 3 / span 6;}
 }
