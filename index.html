@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="leaderboard.js" defer></script>
     <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
     <title>Typer</title>
 </head>
+
+
 <body>
     <div id="name" class="container">
         <label for="name">Sisesta oma nimi</label>
         <input type="text" id="username">
+
+        <label for="difficulty">Vali raskusaste:</label>
+        <select id="difficulty">
+            <option value="easy" id="easy">Lihtne</option>
+            <option value="keskmine" id="keskmine">Keskmine</option>
+            <option value="raske">Raske</option>
+        </select>
+
         <input type="button" value="Salvesta" id="submitname">
     </div>
 
@@ -20,6 +36,7 @@
 
     <div id="info" class="container">
         <div id="wordcount"></div>
+        <div id="comboContainer">Mahlakuse Kombo: <span id="comboCounter">0</span></div>
     </div>
 
     <div id="wordContainer" class="container">
@@ -27,11 +44,18 @@
         <div id="score"></div>
     </div>
 
+    <div id="restart" class="container">
+        <button id="restartGame" style="display: none;">Mängi uuesti</button>
+    </div>
+
+    <button id="leaderboard" class="toggle-btn">Vaata edetabelit</button>
+
     <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
+        <h2>TOP 15</h2>
         <div id="results">
         </div>
     </div>
-    
+
 </body>
+
 </html>
