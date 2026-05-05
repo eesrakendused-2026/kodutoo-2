@@ -1,199 +1,176 @@
-console.log("Fail õigesti ühendatud");
-
 class Typer{
     constructor(){
-        this.name = "";
-        this.wordsInGame = 1;
-        this.startingWordLength = 2;
-        this.startTime = 0;
-        this.endTime = 0;
-        this.word = "Suvaline";
-        this.words = [];
-        this.typeWords = [];
-        this.wordsTyped = 0;
-        this.score = 0;
-
-        this.results = [];
+        this.name="";
+        this.wordsInGame=5;
+        this.words=[];
+        this.typeWords=[];
+        this.wordsTyped=0;
+        this.word="";
+        this.startTime=0;
+        this.score=0;
+        this.results=[];
+        this.soundUnlocked=false;
 
         this.loadFromFile();
     }
 
-    loadResults(){
-        const resultDiv = document.getElementById("results");
-        resultDiv.innerHTML = "";
-
-        for(let i=0; i < this.results.length; i++){
-            const row = document.createElement("div");
-            row.textContent = `${i+1}. ${this.results[i].name} ${this.results[i].time}`;
-            resultDiv.appendChild(row);
-        }
-    }
-
     async loadFromFile(){
-        console.log("load from file sees");
-        const responseFromFile = await fetch("lemmad2013.txt");
-        const allWords = await responseFromFile.text();
-        this.loadResultsFromFile();
-
-        this.getWords(allWords);
+        const res=await fetch("lemmad2013.txt");
+        const text=await res.text();
+        this.getWords(text);
+        this.loadResults();
     }
 
-    async loadResultsFromFile(){
-        const resultsResponse = await fetch("database.txt");
-        const resultsText = await resultsResponse.text();
-        let content = JSON.parse(resultsText).content;
+    loadResults(){
+        let saved=localStorage.getItem("score");
+        this.results=saved?JSON.parse(saved):[];
 
-        console.log(content);
+        const div=document.getElementById("results");
+        div.innerHTML="";
 
-        this.results = JSON.parse(content) || [];
-        this.loadResults();
-        this.saveResult();
+        this.results.forEach(r=>{
+            const row=document.createElement("div");
+            row.innerHTML=`<span>${r.name}</span><span>${r.time}s</span>`;
+            div.appendChild(row);
+        });
     }
 
     getWords(data){
-        //console.log(data);
-        const dataFromFile = data.split("\n");
-        this.separateWordsByLength(dataFromFile);
-    }
+        let list=data.split("\n");
 
-    separateWordsByLength(words){
-        for (let word of words){
-            const wordLength = word.length;
-            if(!this.words[wordLength]){
-                this.words[wordLength] = []
-            }
-            this.words[wordLength].push(word);
-            //[["a", "b"], ["as", "nm"]]
-        }
+        list.forEach(w=>{
+            let len=w.length;
+            if(!this.words[len]) this.words[len]=[];
+            this.words[len].push(w);
+        });
 
-        console.log(this.words);
         this.askName();
     }
 
     askName(){
-        document.getElementById("submitname").addEventListener('click', () => {
-           console.log(document.getElementById("username").value);
-           this.name = document.getElementById("username").value
-           this.startCountdown();
-        })
+        document.getElementById("submitname").addEventListener("click",()=>{
+            this.name=document.getElementById("username").value;
+
+            if(!this.soundUnlocked){
+                document.getElementById("startSound").play().catch(()=>{});
+                this.soundUnlocked=true;
+            }
+
+            this.startCountdown();
+        });
     }
 
     startCountdown(){
-        document.getElementById("counter").style.display = "flex";
-        document.querySelector("#name").style.display = "none";
-        let i = 3;
+        document.getElementById("counter").style.display="flex";
+        document.getElementById("name").style.display="none";
 
-        let countdown = setInterval(() => {
-            document.getElementById("time").innerHTML = i-1;
+        let i=3;
+
+        let int=setInterval(()=>{
+            document.getElementById("time").innerText=i;
             i--;
-            console.log(i)
-            if(i == 0){
-                document.getElementById("counter").style.display = "none";
-                this.startTyper();
-                clearInterval(countdown);
+
+            if(i<0){
+                clearInterval(int);
+                document.getElementById("counter").style.display="none";
+                this.startGame();
             }
-        }, 1000);
-
+        },1000);
     }
 
-    startTyper(){
+    startGame(){
         this.generateWords();
-        this.upDateInfo();
-        document.querySelector("#info").style.display = "flex";
-        document.querySelector("#wordContainer").style.display = "flex";
 
-        this.startTime = performance.now();
-        
-        this.keyListener = (e) => {
-            this.shorteWord(e.key);
-            console.log("keypress sees")
-        }
+        document.getElementById("info").style.display="flex";
+        document.getElementById("wordContainer").style.display="flex";
 
-        window.addEventListener("keypress", this.keyListener)
+        this.startTime=performance.now();
+
+        this.listener=(e)=>this.handleKey(e.key);
+        window.addEventListener("keypress",this.listener);
     }
 
-    shorteWord(keypressed){
-        if(this.word[0] === keypressed && this.word.length > 1 && this.typeWords.length > this.wordsTyped){
-            this.word = this.word.slice(1);
-            this.drawWord();
-        } else if (this.word[0] === keypressed && this.word.length == 1 && this.wordsTyped <= this.typeWords.length-2){
-            this.wordsTyped++;
-            this.upDateInfo();
-            this.selectWord();
-        } else if(this.word[0] === keypressed && this.word.length == 1 && this.typeWords.length-1 == this.wordsTyped){
-            this.upDateInfo();
-            this.wordsTyped = 0;
-            this.endGame();
-        } else if(this.word[0] != keypressed){
-            document.getElementById("word").style.color = "red";
-            setTimeout(() => {
-                document.getElementById("word").style.color = "black";
-            }, 100)
+    generateWords(){
+        for(let i=0;i<this.wordsInGame;i++){
+            let len=5;
+            let rand=Math.floor(Math.random()*this.words[len].length);
+            this.typeWords.push(this.words[len][rand]);
+        }
+        this.nextWord();
+    }
+
+    nextWord(){
+        this.word=this.typeWords[this.wordsTyped];
+        document.getElementById("word").innerText=this.word;
+        document.getElementById("wordcount").innerText=
+            `${this.wordsTyped}/${this.wordsInGame}`;
+    }
+
+    handleKey(key){
+        let sound=document.getElementById("typeSound");
+        sound.currentTime=0;
+        sound.play();
+
+        if(key===this.word[0]){
+            this.word=this.word.slice(1);
+            document.getElementById("word").innerText=this.word;
+
+            if(this.word.length===0){
+                this.wordsTyped++;
+
+                if(this.wordsTyped<this.wordsInGame){
+                    this.nextWord();
+                }else{
+                    this.endGame();
+                }
+            }
         }
     }
 
     endGame(){
-        this.endTime = performance.now();
-        this.score = ((this.endTime - this.startTime) / 1000).toFixed(2);
-        document.getElementById("word").innerHTML = "Mäng läbi. Sinu aeg on: " + this.score + " sekundit.";
-        window.removeEventListener("keypress", this.keyListener)
-        this.loadResultsFromFile();
-    }
+        window.removeEventListener("keypress",this.listener);
 
-    async saveResult(){
-        let result = {
-            name: this.name,
-            time: this.score
+        let time=((performance.now()-this.startTime)/1000).toFixed(2);
+        this.score=time;
+
+        document.getElementById("endSound").play();
+
+        document.getElementById("word").innerText="Aeg: "+time+"s";
+
+        let img=document.getElementById("resultImage");
+
+        if(time<5){
+            img.src="https://via.placeholder.com/150/00ff00?text=Pro";
+        }else if(time<10){
+            img.src="https://via.placeholder.com/150/ffff00?text=OK";
+        }else{
+            img.src="https://via.placeholder.com/150/ff0000?text=Slow";
         }
 
-        console.log(typeof(this.results))
-        console.log(this.results)
-
-        this.results.push(result);
-        this.results.sort((a, b) => parseFloat(a.time) - parseFloat(b.time));
-        localStorage.setItem("score", JSON.stringify(this.results));
-
-        try{
-            await fetch("server.php", {
-                method: "POST",
-                headers: {"Content-Type" : "application/x-www-form-urlencoded"},
-                body: "save=" + encodeURIComponent(JSON.stringify(this.results))
-            });
-            console.log("success" + encodeURIComponent(JSON.stringify(this.results)))
-        } catch(err){
-            alert("Failed " + err)
-        } finally{
-            console.log("päring lõpetud")
-            this.loadResults();
-        }
-
-        console.log(this.results);
-
+        this.saveResult();
     }
 
-    generateWords(){
-        for(let i=0; i<this.wordsInGame; i++){
-            const len = this.wordsInGame + i;
-            const randomIndex = Math.floor(Math.random() * this.words[len].length);
-            this.typeWords[i] = this.words[len][randomIndex];
-        }
+    saveResult(){
+        document.getElementById("winSound").play();
 
-        this.selectWord();
-    }
+        this.results.push({name:this.name,time:this.score});
+        this.results.sort((a,b)=>a.time-b.time);
 
-    selectWord(){
-        this.word = this.typeWords[this.wordsTyped];
-        this.drawWord();
-
-    }
-
-    drawWord(){
-        document.getElementById("word").innerHTML = this.word;
-    }
-
-    upDateInfo(){
-        document.getElementById("wordcount").innerHTML = "Sõnu trükitud: " + this.wordsTyped + "/" + this.wordsInGame;
+        localStorage.setItem("score",JSON.stringify(this.results));
+        this.loadResults();
     }
 }
 
-let typer = new Typer();
+document.addEventListener("DOMContentLoaded",()=>{
+    new Typer();
+
+    let modal=document.getElementById("modal");
+
+    document.getElementById("openResults").onclick=()=>{
+        modal.style.display="block";
+    };
+
+    document.getElementById("closeModal").onclick=()=>{
+        modal.style.display="none";
+    };
+});
