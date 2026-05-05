@@ -1,37 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
+    <title>Trükkimismäng</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <title>Typer</title>
+    <script src="typer.js" defer></script>
 </head>
 <body>
-    <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
+    <div id="name" class="container card">
+        <h1>Trükkimismäng</h1>
+        <label for="username">Sisesta oma nimi</label>
         <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+        <label for="difficulty">Raskusaste</label>
+        <select id="difficulty">
+            <option value="easy">Lihtne</option>
+            <option value="medium">Keskmine</option>
+            <option value="hard">Raske</option>
+        </select>
+        <input type="button" value="Alusta" id="submitname">
+        <button id="showResults">Vaata tulemusi</button>
     </div>
 
-    <div id="counter" class="container">
+    <div id="counter" class="container card">
         <div id="time"></div>
     </div>
 
-    <div id="info" class="container">
+    <div id="info" class="container card">
         <div id="wordcount"></div>
+        <div id="accuracy"></div>
+        <div id="leveltext"></div>
     </div>
 
-    <div id="wordContainer" class="container">
+    <div id="wordContainer" class="container card">
         <div id="word"></div>
+        <div id="nextword"></div>
         <div id="score"></div>
+        <input type="button" value="Alusta uuesti" id="restart">
     </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+    <div id="resultBox" class="container card">
+        <h2>Tulemus</h2>
+        <div id="resultText"></div>
+        <img id="speedImage" src="images/keskmine.svg" alt="Kiiruse pilt">
+    </div>
+
+    <div id="resultsModal" class="modal">
+        <div class="modalContent">
+            <span id="closeModal" class="close">&times;</span>
+            <h2>TOP 20</h2>
+            <div id="results"></div>
         </div>
     </div>
-    
 </body>
 </html>

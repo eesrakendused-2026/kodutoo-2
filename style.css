@@ -1,34 +1,142 @@
 body{
     margin:0;
-    padding:0;
+    padding:20px;
+    font-family:"Roboto", sans-serif;
+    background:#f4f4f4;
+    color:#222;
 }
 
 .container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 200px;
-    flex-direction: column;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
 }
 
-.container > div {
-    padding: 10px;
+.card{
+    max-width:600px;
+    margin:20px auto;
+    padding:20px;
+    background:white;
+    border:1px solid #d8d8d8;
+    border-radius:8px;
 }
 
-.container > input {
-    margin: 5px;
+input, select, button{
+    margin:6px 0;
+    padding:10px;
+    font-size:16px;
+    width:100%;
+    max-width:280px;
+    border:1px solid #bdbdbd;
+    border-radius:6px;
 }
 
-#info, #wordContainer, #counter{
-    display: none;
+button, input[type="button"]{
+    background:#2f6fed;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover, input[type="button"]:hover{
+    background:#2458bb;
+}
+
+button:active, input[type="button"]:active{
+    transform:scale(0.99);
+}
+
+input:focus, select:focus{
+    outline:2px solid #2f6fed;
+}
+
+input:disabled{
+    background:#ececec;
+}
+
+select:checked{
+    color:#222;
+}
+
+#info, #wordContainer, #counter, #resultBox{
+    display:none;
 }
 
 #word, #time{
-    font-size: 36px;
-    font-weight: 700;
+    font-size:36px;
+    font-weight:700;
 }
 
-#info{
-    min-height: 30px;
-    align-items: start;
+#nextword, #score, #accuracy, #leveltext, #resultText{
+    margin-top:10px;
+}
+
+#speedImage{
+    width:140px;
+    margin-top:12px;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+}
+
+.modalContent{
+    background:white;
+    width:90%;
+    max-width:700px;
+    margin:60px auto;
+    padding:20px;
+    border-radius:8px;
+}
+
+.close{
+    float:right;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.close:hover{
+    color:#c0392b;
+}
+
+.resultRow{
+    display:grid;
+    grid-template-columns:50px 1fr 100px 100px;
+    gap:10px;
+    padding:10px;
+    border:1px solid #e2e2e2;
+    border-radius:6px;
+    margin-top:8px;
+}
+
+.resultRow:nth-child(even){
+    background:#f8f8f8;
+}
+
+.resultRow:first-child{
+    border-color:#2f6fed;
+}
+
+@media (max-width: 600px){
+    body{
+        padding:10px;
+    }
+
+    .card{
+        padding:14px;
+    }
+
+    #word, #time{
+        font-size:28px;
+    }
+
+    .resultRow{
+        grid-template-columns:1fr;
+    }
 }
