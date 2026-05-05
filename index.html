@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <title>Typer</title>
@@ -27,11 +28,23 @@
         <div id="score"></div>
     </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+    <div id="resultsContainer">
+        <div id="modalContent">
+            <span class="close">&times;</span>
+            <h2>Edetabel</h2>
+            <div id="userScore" class="user-score-box">
+                <div id="scoreContent"></div>
+            </div>
+            <div class="results-header">
+                <span class="header-rank">Koht</span>
+                <span class="header-name">Nimi</span>
+                <span class="header-time">Aeg (s)</span>
+            </div>
+            <div id="results"></div>
         </div>
     </div>
+    <button id="showResultsBtn" style="display: none;">Näita tulemusi</button>
+    <button id="playAgainBtn" style="display: none;" onclick="window.location.reload()">Mängi uuesti</button>
     
 </body>
 </html>
