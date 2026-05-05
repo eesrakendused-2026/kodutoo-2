@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typer Master - Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+    <script src="typer.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+    <button id="theme-toggle" class="theme-switch">🌙/☀️</button>
+
+    <div id="auth-container" class="container">
+        <h1>Typer mäng</h1>
+        <button id="login-btn" class="btn">Logi sisse Google'iga</button>
+    </div>
+
+    <div id="name" class="container" style="display:none;">
+        <p>Kasutaja: <strong id="user-display-name"></strong></p>
+        <button id="submitname" class="btn">Alusta mängu</button>
+        <button id="open-scores" class="btn secondary">Vaata edetabelit</button>
+        <button id="logout-btn" class="btn-text">Vaheta kasutajat</button>
+    </div>
+
+    <div id="counter" class="container" style="display:none;">
+        <div id="time"></div>
+    </div>
+
+    <div id="info" class="container" style="display:none;">
+        <div class="stats-bar">
+            <div id="wordcount">Sõnad: 0/5</div>
+            <div id="live-wpm">WPM: 0</div>
+            <div id="live-errors">Vigu: 0</div>
+        </div>
+    </div>
+
+    <div id="wordContainer" class="container" style="display:none;">
+        <div id="word"></div>
+        <div id="score"></div>
+    </div>
+
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🏆 EDETABEL</h2>
+            <div class="results-header">
+                <span>Koht</span>
+                <span>Nimi</span>
+                <span>Aeg</span>
+                <span>Tase</span>
+            </div>
+            <div id="results"></div>
+        </div>
+    </div>
+
+   <audio id="sound-start" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+<audio id="sound-key" src="https://assets.mixkit.co/active_storage/sfx/1120/1120-preview.mp3"></audio>
+<audio id="sound-end" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
+<audio id="sound-win" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
+</body>
+</html>

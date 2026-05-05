@@ -1,0 +1,115 @@
+:root {
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --primary: #4a90e2;
+    --accent: #f39c12;
+}
+
+body.dark-mode {
+    --bg: #1a1a1a;
+    --card: #2c2c2c;
+    --text: #f0f2f5;
+    --primary: #357abd;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    transition: 0.3s;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+    flex-direction: column;
+}
+
+/*5 Pseudo-klassi (:hover, :active, :focus, :nth-child, :last-child) */
+.btn {
+    padding: 12px 24px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.btn:hover { background-color: var(--accent); transform: scale(1.05); } /* 1*/
+.btn:active { transform: scale(0.95); } /* 2 */
+.btn:focus { outline: 3px solid var(--text); } /* 3 */
+
+.results-row:nth-child(even) { background: rgba(0,0,0,0.05); } /* 4 */
+.results-row:last-child { border-bottom: none; } /* 5 */
+
+/* Modal ja Tulemuste disain */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+    background-color: var(--card);
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.close {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.results-header, .results-row {
+    display: grid;
+    grid-template-columns: 15% 45% 20% 20%;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#word {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 48px;
+    letter-spacing: 2px;
+}
+
+
+@media (max-width: 600px) {
+    #word { font-size: 32px; }
+    .modal-content { width: 95%; margin: 5% auto; }
+    .container { min-height: 180px; }
+    .stats-bar { flex-direction: column; gap: 10px; }
+}
+
+.stats-bar {
+    display: flex;
+    gap: 30px;
+    background: var(--card);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.theme-switch {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: 1px solid var(--text);
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px; height: 40px;
+}
