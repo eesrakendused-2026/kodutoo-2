@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script type="module" src="script.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Typer</title>
+</head>
+
+<body>
+    <header id="topBar">
+        <div class="brand">
+            <div class="brandTitle">Typer</div>
+            <div class="brandSub" id="statusText">Laeb sõnu…</div>
+        </div>
+
+        <div class="controls">
+            <div class="controlGroup">
+                <label class="controlLabel" for="gameMode">Režiim</label>
+                <select id="gameMode">
+                    <option value="classic" selected>Klassikaline</option>
+                    <option value="time">Time Attack</option>
+                </select>
+            </div>
+
+            <div class="controlGroup">
+                <label class="controlLabel" for="wordsInGame">Sõnu</label>
+                <input id="wordsInGame" type="number" min="1" max="20" step="1" value="3">
+            </div>
+            <div class="controlGroup">
+                <label class="controlLabel" for="startingWordLength">Algus pikkus</label>
+                <input id="startingWordLength" type="number" min="2" max="12" step="1" value="3">
+            </div>
+            <div class="controlGroup">
+                <label class="controlLabel" for="timeLimit">Aeg (sek)</label>
+                <input id="timeLimit" type="number" min="10" max="300" step="5" value="60">
+            </div>
+
+            <button id="startBtn" class="btn primary" type="button" disabled>Start</button>
+            <button id="pauseBtn" class="btn" type="button" disabled>Paus</button>
+            <button id="restartBtn" class="btn danger" type="button" disabled>Uuesti</button>
+            <button id="openResultsBtn" class="btn ghost" type="button">Tulemused</button>
+
+            <div class="controlGroup soundGroup">
+                <label class="controlLabel" for="volume">Heli</label>
+                <input id="volume" type="range" min="0" max="1" step="0.05" value="0.6">
+                <label class="checkbox">
+                    <input id="mute" type="checkbox">
+                    <span>Mute</span>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <section id="gameCard">
+            <div id="container">
+                <div id="wordDiv">…</div>
+                <div id="score" style="display:none;"></div>
+            </div>
+
+            <div id="infoContainer">
+                <div id="info">0/0</div>
+                <div id="timer">⏱ 00:00</div>
+                <div id="accuracy">Täpsus: 100%</div>
+            </div>
+        </section>
+    </main>
+
+    <div id="resultsModal" class="modal" aria-hidden="true">
+        <div class="modalBackdrop" data-close="true"></div>
+        <div class="modalPanel" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+            <div class="modalHeader">
+                <h2 id="resultsTitle">Tulemused</h2>
+                <button id="closeResultsBtn" class="iconBtn" type="button" aria-label="Sulge tulemused">×</button>
+            </div>
+            <div class="modalBody">
+                <section class="resultsSection">
+                    <h3 class="sectionTitle">Sinu tulemus</h3>
+                    <div id="yourResult" class="resultGrid"></div>
+                </section>
+
+                <section class="resultsSection">
+                    <h3 class="sectionTitle">Edetabel</h3>
+                    <div class="leaderboardControls">
+                        <label class="controlLabel" for="leaderboardView">Vaade</label>
+                        <select id="leaderboardView">
+                            <option value="high" selected>High score</option>
+                            <option value="recent">Recent</option>
+                            <option value="wpm">Highest WPM</option>
+                        </select>
+                    </div>
+                    <div id="results" class="resultsList"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <audio id="sndStart" preload="auto" src="start.mp3"></audio>
+    <audio id="sndGameplay" preload="auto" src="gameplay.mp3"></audio>
+    <audio id="sndClick" preload="auto" src="click_sound.mp3"></audio>
+    <audio id="sndEnd" preload="auto" src="ending.mp3"></audio>
+    <audio id="sndQualify" preload="auto" src="leaderboard.mp3"></audio>
+
+</body>
+</html>
