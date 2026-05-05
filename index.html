@@ -1,25 +1,32 @@
+<!-- kirsipuutauri@gmail.com -->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
+    <script type="module" src="typer.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Typer</title>
 </head>
+
 <body>
     <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
+        <label for="name">Sisesta nimi</label>
         <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+        <input type="button" value="Salvesta" id="submitName">
+        <button id="googleLogin">Logi sisse Google'ga</button>
+        <button id="switchUserBtn">Switch user</button>
+    </div>
+
+
+    <div id="info" class="container">
+        <div id="wordCount">1/5</div>
     </div>
 
     <div id="counter" class="container">
         <div id="time"></div>
-    </div>
-
-    <div id="info" class="container">
-        <div id="wordcount"></div>
     </div>
 
     <div id="wordContainer" class="container">
@@ -27,11 +34,34 @@
         <div id="score"></div>
     </div>
 
+    <div class="container">
+        <button id="restartBtn" style="display:none;">Restart</button>
+    </div>
+
+
     <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+        <div class="container">
+            <button id="showResultsBtn" class="showResults">Näita tulemusi</button>
+            <button id="hideResultsBtn">Peida tulemused</button>
+        </div>
+
+        <h2 id="headingTitle">Top 20</h2>
+        <div id="results" class="hidden">
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nimi</th>
+                        <th>Aeg (s)</th>
+                        <th>WPM</th>
+                        <th>Tase</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                </tbody>
+            </table>
         </div>
     </div>
-    
 </body>
+
 </html>
