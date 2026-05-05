@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <title>Typer</title>
 </head>
+
 <body>
     <div id="name" class="container">
         <label for="name">Sisesta oma nimi</label>
         <input type="text" id="username">
+
+        <label for="difficulty">Raskusaste</label>
+        <select id="difficulty">
+            <option value="3">Kerge (3 sõna)</option>
+            <option value="6">Keskmine (6 sõna)</option>
+            <option value="9">Raske (9 sõna)</option>
+        </select>
+
         <input type="button" value="Salvesta" id="submitname">
+        <input type="button" value="Vaata tulemusi" id="openModal">
     </div>
 
     <div id="counter" class="container">
@@ -27,11 +39,21 @@
         <div id="score"></div>
     </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+    <div id="modal">
+        <div id="modalBox">
+            <div id="modalHeader">
+                <h2>TOP 20</h2>
+                <button type="button" id="closeModal">Sulge</button>
+            </div>
+            <div id="resultsHeader" class="result-row">
+                <span>Koht</span>
+                <span>Nimi</span>
+                <span>Aeg</span>
+                <span>Kiirus</span>
+            </div>
+            <div id="results"></div>
         </div>
     </div>
-    
 </body>
+
 </html>
