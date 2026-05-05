@@ -1,7 +1,6 @@
 # kodutoo-2
-Täiusta tunnis loodud typer'i rakendust.
 
-Tähtaeg: 05.05.2026 23:59
+Plaanis oli kasutada 8-bit sounde ja olen kusagil näinud, et seda saab teha JS-i enda sees. Küsisin AI-lt, kuidas seda teha, ja ta selgitas.
 
 # Kõik nõuded täidetud, siis 30 punkti.
 

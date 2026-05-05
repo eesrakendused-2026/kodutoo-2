@@ -1,6 +1,66 @@
 body{
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
+    background: #0a0a0a;
+    color: #f2f2f2;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    padding-top: 70px;
+}
+
+#topBar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: #000;
+    border-bottom: 3px solid #c81020;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 100;
+}
+
+#author{
+    font-size: 10px;
+    color: #f2f2f2;
+}
+
+#author a{
+    color: #ff334a;
+    margin-left: 10px;
+    text-decoration: none;
+    border-bottom: 1px dashed #ff334a;
+}
+
+#author a:hover{
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+#volumeBox{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 9px;
+}
+
+#volume{
+    width: 100px;
+    accent-color: #c81020;
+    cursor: pointer;
+}
+
+#volume:focus{
+    outline: 2px solid #ff334a;
+}
+
+#volumeValue{
+    min-width: 35px;
+    color: #ff334a;
 }
 
 .container{
@@ -9,26 +69,309 @@ body{
     align-items: center;
     min-height: 200px;
     flex-direction: column;
+    padding: 20px;
 }
 
-.container > div {
+.container > div{
     padding: 10px;
+    text-align: center;
 }
 
-.container > input {
-    margin: 5px;
-}
-
-#info, #wordContainer, #counter{
+#info, #wordContainer, #counter, #userInfo, #endGame{
     display: none;
 }
 
-#word, #time{
-    font-size: 36px;
+button{
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    background: #0a0a0a;
+    color: #fff;
+    border: 2px solid #c81020;
+    padding: 12px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+button:hover{
+    background: #c81020;
+    color: #000;
+}
+
+button:active{
+    transform: translateY(2px);
+    box-shadow: 0 0 10px #ff334a;
+}
+
+button:focus{
+    outline: 2px dashed #ff334a;
+    outline-offset: 2px;
+}
+
+button:disabled{
+    border-color: #555;
+    color: #555;
+    cursor: not-allowed;
+    background: #0a0a0a;
+}
+
+#openResults{
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 50;
+    font-size: 10px;
+}
+
+#resultsSidebar{
+    position: fixed;
+    top: 0;
+    right: -360px;
+    width: 320px;
+    height: 100%;
+    background: #111;
+    border-left: 4px solid #c81020;
+    padding: 60px 20px 20px 20px;
+    overflow-y: auto;
+    transition: right 0.3s ease-in-out;
+    z-index: 200;
+    box-sizing: border-box;
+}
+
+#resultsSidebar.open{
+    right: 0;
+}
+
+#resultsSidebar h2{
+    color: #ff334a;
+    text-align: center;
+    margin-top: 0;
+    font-size: 14px;
+}
+
+#closeResults{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    font-size: 10px;
+}
+
+#results{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.resultRow{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 6px;
+    font-size: 9px;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.resultRow:nth-child(odd){
+    background: #1a1a1a;
+}
+
+.resultRow:nth-child(even){
+    background: #0f0f0f;
+}
+
+.resultRow:first-child{
+    background: #2a0008;
+    border: 1px solid #c81020;
+    color: #ffcc00;
+}
+
+.resultRow:hover{
+    background: #3a0010;
+    color: #fff;
+}
+
+.resultHead{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    font-size: 9px;
+    color: #ff334a;
+    border-bottom: 2px solid #c81020;
+    margin-bottom: 6px;
+}
+
+.resultPos{
+    width: 30px;
+    text-align: right;
+}
+
+.resultName{
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.resultTime{
+    width: 60px;
+    text-align: right;
+}
+
+#login h2{
+    color: #ff334a;
+    font-size: 16px;
+    text-align: center;
+}
+
+#welcomeText{
+    color: #ff334a;
+    font-size: 14px;
+}
+
+#difficultyChooser p{
+    margin: 5px 0;
+    font-size: 10px;
+}
+
+#difficultyBtns{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.diffBtn.selected{
+    background: #c81020;
+    color: #000;
+    box-shadow: 0 0 8px #ff334a;
+}
+
+#word{
+    font-size: 32px;
     font-weight: 700;
+    letter-spacing: 4px;
+    color: #fff;
+}
+
+#time{
+    font-size: 64px;
+    color: #ff334a;
 }
 
 #info{
-    min-height: 30px;
-    align-items: start;
+    min-height: 60px;
+    flex-direction: row;
+    gap: 20px;
+}
+
+#quitGame{
+    border-color: #555;
+    font-size: 9px;
+    padding: 8px 14px;
+}
+
+#quitGame:hover{
+    background: #555;
+    color: #000;
+}
+
+#endGame img{
+    max-width: 220px;
+    height: auto;
+    border: 3px solid #c81020;
+    margin-bottom: 10px;
+}
+
+#rankText{
+    font-size: 18px;
+    color: #ff334a;
+}
+
+#accuracy, #finalTime{
+    font-size: 11px;
+    color: #ddd;
+}
+
+input[type="range"]:hover{
+    opacity: 0.85;
+}
+
+a:focus{
+    outline: 2px dashed #ff334a;
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px){
+    body{
+        font-size: 10px;
+        padding-top: 90px;
+    }
+
+    #topBar{
+        height: auto;
+        flex-direction: column;
+        padding: 8px;
+        gap: 6px;
+    }
+
+    #author{
+        font-size: 8px;
+        text-align: center;
+    }
+
+    #volumeBox{
+        font-size: 8px;
+    }
+
+    #volume{
+        width: 80px;
+    }
+
+    #openResults{
+        top: auto;
+        bottom: 10px;
+        right: 10px;
+        font-size: 9px;
+        padding: 8px 12px;
+    }
+
+    #resultsSidebar{
+        width: 100%;
+        right: -110%;
+    }
+
+    #word{
+        font-size: 22px;
+        letter-spacing: 2px;
+    }
+
+    #time{
+        font-size: 48px;
+    }
+
+    button{
+        font-size: 9px;
+        padding: 10px 14px;
+    }
+
+    #login h2{
+        font-size: 12px;
+    }
+
+    #welcomeText{
+        font-size: 11px;
+    }
+
+    #endGame img{
+        max-width: 160px;
+    }
+
+    #rankText{
+        font-size: 14px;
+    }
+
+    .container{
+        min-height: 140px;
+    }
 }

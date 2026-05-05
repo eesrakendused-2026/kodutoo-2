@@ -1,17 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
     <link rel="stylesheet" href="style.css">
     <title>Typer</title>
 </head>
 <body>
-    <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+    <div id="topBar">
+        <div id="author">
+            Chris-Martin Murdvee
+            <a id="repoLink" href="https://github.com/cmmurdvee/kodutoo-2" target="_blank" rel="noopener">Repositoorium</a>
+        </div>
+        <div id="volumeBox">
+            <label for="volume">Heli</label>
+            <input type="range" id="volume" min="0" max="100" value="50">
+            <span id="volumeValue">50%</span>
+        </div>
+    </div>
+
+    <button id="openResults">TOP 20</button>
+
+    <aside id="resultsSidebar">
+        <button id="closeResults" aria-label="Sulge">X</button>
+        <h2>TOP 20</h2>
+        <div id="results"></div>
+    </aside>
+
+    <div id="login" class="container">
+        <h2>Tere tulemast Typeri mängu!</h2>
+        <button id="googleLogin">Logi sisse Google'iga</button>
+    </div>
+
+    <div id="userInfo" class="container">
+        <div id="welcomeText"></div>
+        <div id="difficultyChooser">
+            <p>Vali raskusaste:</p>
+            <div id="difficultyBtns">
+                <button class="diffBtn selected" data-diff="easy">Lihtne</button>
+                <button class="diffBtn" data-diff="medium">Keskmine</button>
+                <button class="diffBtn" data-diff="hard">Raske</button>
+            </div>
+        </div>
+        <button id="startGame">Alusta mängu</button>
+        <button id="logout">Vaheta kasutjat</button>
     </div>
 
     <div id="counter" class="container">
@@ -20,6 +55,7 @@
 
     <div id="info" class="container">
         <div id="wordcount"></div>
+        <button id="quitGame">Loobu</button>
     </div>
 
     <div id="wordContainer" class="container">
@@ -27,11 +63,15 @@
         <div id="score"></div>
     </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
-        </div>
+    <div id="endGame" class="container">
+        <img id="rankImage" src="" alt="">
+        <div id="rankText"></div>
+        <div id="accuracy"></div>
+        <div id="finalTime"></div>
+        <button id="playAgain">Mängi uuesti</button>
+        <button id="switchUser">Vaheta kasutajat</button>
     </div>
-    
+
+    <script type="module" src="typer.js"></script>
 </body>
 </html>
