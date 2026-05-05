@@ -1,37 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
-    <title>Typer</title>
+    <title>Typer Mäng</title>
 </head>
 <body>
     <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+        <h1>TYPER GAME</h1>
+        <label for="username">Sisesta oma nimi</label>
+        <input type="text" id="username" placeholder="Sinu nimi siia...">
+        <input type="button" value="Salvesta ja Alusta" id="submitname">
+        <button id="openModalBtn">Edetabel</button>
+        <div id="muteControl" class="mute-btn" style="cursor: pointer; display: inline-block; margin-left: 10px; vertical-align: middle;">
+    <img id="muteIcon" src="https://img.icons8.com/ios-filled/50/ffffff/high-volume--v1.png" width="30" height="30" style="display: block;">
+</div>
     </div>
 
-    <div id="counter" class="container">
+    <div id="counter" class="container" style="display:none;">
         <div id="time"></div>
     </div>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
+    <div id="info" class="container" style="display:none;">
+        <div id="wordcount">Sõnu: 0/2</div>
+        <div id="errors" style="color: #ff007f; font-weight: bold;">Vigu: 0</div>
     </div>
 
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
+    <div id="wordContainer" class="container" style="display:none;">
+        <div id="timerDisplay" style="color: #ff007f; font-size: 1.5rem; font-weight: bold; text-shadow: 0 0 10px #ff007f; margin-bottom: 10px;">0.00s</div>
+        <div id="word" style="font-size: 2rem; letter-spacing: 2px;"></div>
     </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+    <div id="resultsModal" class="modal">
+        
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>TOP 10 TULEMUSED</h2>
+            <div id="results">
+                </div>
+            
+            <div class="rating-box">
+                <h3 id="ratingText"></h3>
+                <img id="ratingImg" src="" alt="Reiting" style="display:none; width: 100px; margin: 10px auto;">
+            </div>
+
+            <button id="restartGame" style="display:none;">Mängi uuesti</button>
         </div>
     </div>
-    
 </body>
 </html>
