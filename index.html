@@ -1,37 +1,187 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
-    <link rel="stylesheet" href="style.css">
-    <title>Typer</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="typer.js" defer></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- kasutatud on Claude AI abi preconnectide tegemisel, et fonte optimiseerida-->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <title>Typer — Trükkimise väljakutse</title>
 </head>
 <body>
-    <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
-    </div>
 
-    <div id="counter" class="container">
-        <div id="time"></div>
-    </div>
+  <canvas id="bgCanvas"></canvas>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
+  <div id="name" class="screen">
+    <div class="login-card">
+      <div class="logo-area">
+        <span class="logo-bracket">[</span>
+        <span class="logo-text">Typer</span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <p class="tagline">Trüki kiiremini kui valgus liigub</p>
+      <div class="login-divider"></div>
+      <button id="googleLoginBtn" class="btn btn-google">
+        <svg viewBox="0 0 24 24" width="18" height="18" style="flex-shrink:0">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Logi sisse Google'iga
+      </button>
+      <button id="submitname" class="btn btn-start" style="display:none">
+        Alusta mängu →
+      </button>
     </div>
+  </div>
 
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
+  <div id="counter" class="screen" style="display:none">
+    <div class="countdown-wrap">
+      <p class="countdown-label">Algab</p>
+      <div id="time" class="countdown-num">3</div>
     </div>
+  </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
-        </div>
+  <div id="info" class="info-bar" style="display:none">
+    <span id="wordcount" class="info-item"></span>
+    <span id="elapsed" class="info-item timer-live">0.0s</span>
+  </div>
+
+  <div id="wordContainer" class="word-screen" style="display:none">
+    <div id="progressBar"><div id="progressFill"></div></div>
+    <div id="word" class="main-word"></div>
+    <div id="upcoming" class="upcoming-words"></div>
+    <div id="keyHint" class="key-hint"></div>
+  </div>
+
+  <div id="endScreen" class="screen" style="display:none">
+    <div class="result-card">
+      <div id="speedImage" class="speed-img-wrap"></div>
+      <div class="result-label">Sinu tulemus</div>
+      <div id="finalScore" class="final-score"></div>
+      <div id="speedLabel" class="speed-label"></div>
+      <div id="wpmDisplay" class="wpm-display"></div>
+      <div class="end-btn-group">
+        <button id="restartBtn" class="btn btn-start">Mängi uuesti</button>
+        <button id="switchUserBtn" class="btn btn-ghost">Vaheta kasutajat</button>
+      </div>
     </div>
-    
+  </div>
+
+  <button id="showResultsBtn" class="btn btn-small">TOP 20</button>
+
+  <div id="resultsSidebar" class="sidebar" aria-hidden="true">
+    <div class="sidebar-inner">
+      <div class="sidebar-header">
+        <h2 class="sidebar-title">Top 20</h2>
+        <button id="closeSidebar" class="close-btn" aria-label="Sulge">✕</button>
+      </div>
+      <div class="table-header">
+        <span>#</span><span>Nimi</span><span>Kiirus</span><span>WPM</span>
+      </div>
+      <div id="results"></div>
+    </div>
+  </div>
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <div id="difficultyModal" class="diff-overlay" style="display:none">
+    <!-- kasutatud on Claude AI-d, et teha modal/overlay struktuur koos eraldi paneli ja option elementidega -->
+    <div class="diff-panel">
+      <p class="diff-eyebrow">// valiku_ekraan</p>
+      <h2 class="diff-heading">Vali<br><em>raskusaste</em></h2>
+      <div class="diff-options">
+        <button class="diff-btn" data-level="easy">
+          <span class="diff-num">01</span>
+          <span class="diff-name">Lihtne</span>
+          <span class="diff-desc">5 lühikest sõna</span>
+          <span class="diff-arrow">→</span>
+        </button>
+        <button class="diff-btn" data-level="medium">
+          <span class="diff-num">02</span>
+          <span class="diff-name">Keskmine</span>
+          <span class="diff-desc">10 sõna</span>
+          <span class="diff-arrow">→</span>
+        </button>
+        <button class="diff-btn active" data-level="hard">
+          <span class="diff-num">03</span>
+          <span class="diff-name">Raske</span>
+          <span class="diff-desc">15 pikka sõna</span>
+          <span class="diff-arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bgCanvas');
+    const ctx    = canvas.getContext('2d');
+
+    const COLORS = [
+      'rgba(180,60,100,',   
+      'rgba(100,30,120,',   
+      'rgba(40,10,30,',     
+      'rgba(220,80,140,',   
+      'rgba(70,20,80,',     
+    ];
+
+    let orbs = [];
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function initOrbs() {
+      orbs = [];
+      const count = Math.max(6, Math.floor(window.innerWidth / 160));
+      for (let i = 0; i < count; i++) {
+        orbs.push({
+          x:    Math.random() * canvas.width,
+          y:    Math.random() * canvas.height,
+          r:    120 + Math.random() * 220,
+          vx:   (Math.random() - 0.5) * 0.35,
+          vy:   (Math.random() - 0.5) * 0.35,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          alpha: 0.18 + Math.random() * 0.22,
+        });
+      }
+    }
+
+    function drawFrame() {
+      ctx.fillStyle = '#0e060a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (const o of orbs) {
+        const grad = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+        grad.addColorStop(0,   o.color + o.alpha + ')');
+        grad.addColorStop(0.5, o.color + (o.alpha * 0.4) + ')');
+        grad.addColorStop(1,   o.color + '0)');
+        ctx.beginPath();
+        ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        o.x += o.vx;
+        o.y += o.vy;
+        if (o.x < -o.r)              o.x = canvas.width  + o.r;
+        if (o.x > canvas.width  + o.r) o.x = -o.r;
+        if (o.y < -o.r)              o.y = canvas.height + o.r;
+        if (o.y > canvas.height + o.r) o.y = -o.r;
+      }
+
+      requestAnimationFrame(drawFrame);
+    }
+
+    window.addEventListener('resize', () => { resize(); initOrbs(); });
+    resize();
+    initOrbs();
+    drawFrame();
+  </script>
+
+<!-- kasutatud on Claude AI-d ka üldiseks debugimiseks -->
 </body>
 </html>
