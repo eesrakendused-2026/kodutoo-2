@@ -1,3 +1,6 @@
+http://greeny.cs.tlu.ee/~karmen02/eesrakendused/kodune/
+
+
 1.Veebilehel on läbivalt kasutusel google font. 
 
 2. Tulemused on modaliga lehe vasakul välja toodud.
