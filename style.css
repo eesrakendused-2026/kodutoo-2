@@ -30,7 +30,6 @@ body{
 #word, #time{
     font-size: 36px;
     font-weight: 700;
-    font-family: "Chakra Petch", sans-serif;
     font-weight: 400; 
     font-size: 32px; 
     margin-bottom: 15px; 
@@ -42,13 +41,12 @@ body{
 }
 
 #loginContainer h2{
-    font-family: "Chakra Petch", sans-serif;
     font-weight: 500; 
     font-size: 40px; 
     margin-bottom: 15px; 
 }
 #login{
-    font-family: "Chakra Petch", sans-serif;
+
     font-weight: 550; 
     font-size: 15px; 
     margin-bottom: 15px; 
@@ -72,7 +70,6 @@ body{
   color: #111;
   cursor: pointer;
   display: flex;
-  font-family: "Chakra Petch", sans-serif;
   font-weight: 600;
   font-size: 16px;
   height: 48px;
@@ -132,7 +129,6 @@ body{
   color: #111;
   cursor: pointer;
   display: flex;
-  font-family: "Chakra Petch", sans-serif;
   font-weight: 600;
   font-size: 14px; 
   height: 36px;   
@@ -175,25 +171,259 @@ body{
 #open:hover {
   outline: 0;
 }
+
+/* dark/light modei nupp*/
+#themeToggle {
+    align-items: center;
+    background-color: #fee6e3;
+    border: 2px solid #111;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #111;
+    cursor: pointer;
+    display: flex;
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    height: 36px;
+    justify-content: center;
+    padding: 0 15px;
+    position: relative;
+    margin: 0; 
+}
+
+#themeToggle:after {
+    background-color: #111;
+    border-radius: 8px;
+    content: "";
+    display: block;
+    height: 36px;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    top: -2px;
+    transform: translate(4px, 4px);
+    transition: transform .2s ease-out;
+    z-index: -1;
+}
+
+#themeToggle:hover:after {
+    transform: translate(0, 0);
+}
+
+#themeToggle:active {
+    background-color: #ecd7f0;
+}
 /* Siin lõppeb leheküljelt võetud buttoni CSS*/ 
 
 
+.resultsNames, .result-row {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #111;
+    padding: 8px 0;
+}
+
+.rank {
+    width: 15%;
+    text-align: left;
+}
+
+.name {
+    width: 55%;
+    text-align: left;
+}
+
+.time {
+    width: 30%;
+    text-align: right;
+}
+
 .modal {
-    display: none; 
+    display: none;
     position: fixed;
     z-index: 100;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.8); 
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(128, 96, 96, 0.76);
 }
 
 .modal-content {
     background-color: #ac9694;
-    margin: 10% auto;
+    margin: 3% auto;
     padding: 20px;
-    width: 60%;
+    width: 70%;
     border-radius: 10px;
     color: black;
+}
+/**/
+
+#gameEndContainer{
+    text-align: center;
+    margin-top: 20px;
+    display: none; 
+    flex-direction: column; 
+    align-items: center;
+    width: 100%;
+}
+
+#speedImage {
+    max-width: 180px; 
+    height: auto; 
+    border-radius: 12px; 
+    border: 3px solid #111;
+    box-shadow: 5px 5px 0px #111; 
+    margin-bottom: 15px; 
+}
+
+
+#speedText{
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/*telefonivaade e media query*/
+
+@media only screen and (max-width: 768px) {
+    .container{
+        width: 95%;
+        padding: 10px;
+    }
+
+    #word{
+        font-size: 24px;
+        line-height: 1.4;
+    }
+    .modal-content{
+        width: 90%; 
+        margin: 5% auto;
+        padding: 15px;
+    }
+
+    .rank { width: 15%;}
+    .name { width: 50%; font-size: 14px;}
+    .time { width: 35%; font-size: 14px;}
+
+    #speedImage{
+        max-width: 140px; 
+    }
+    #login, #open{
+        width: 100%;
+        height: 55px; 
+        font-size: 18px;
+    }
+    
+    .resultsNames span{
+        font-size: 12px;
+    }
+    .modal-content{
+        margin: 1% auto; 
+        width: 95%;
+    }
+}
+
+/*pseudo asjad + eelpool on ka paar pseudo klassi:D */
+
+.result-row:nth-child(even){
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+#results .result-row:first-child{
+    font-weight: 900;
+    color: #dcff14; 
+    background-color: rgba(0, 0, 0, 0.8); 
+    border-radius: 5px;
+    padding-left: 5px; 
+}
+
+#results .result-row:nth-child(2){
+    font-weight: 800;
+    color: #fc8e28; 
+}
+#results .result-row:nth-child(3){
+    font-weight: 800;
+    color: #ff2e27; 
+}
+
+#results .result-row:last-child{
+    border-bottom: none;
+}
+
+
+/* featurei css*/ 
+#settingsContainer {
+    position: absolute; 
+    top: 20px;          
+    right: 20px;        
+    display: flex;
+    flex-direction: row; 
+    gap: 15px;
+    align-items: center;
+}
+
+#restart {
+    align-items: center; 
+    background-color: #fee6e3; 
+    border: 2px solid #111;
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    color: #111; 
+    cursor: pointer;
+    display: flex; 
+    font-weight: 600; 
+    font-size: 14px; 
+    height: 36px;
+    justify-content: center;
+    padding: 0 15px; 
+    position: relative;
+    text-align: center; 
+    text-decoration: none; 
+    user-select: none;
+    margin-top: 15px; 
+    font-family: "Chakra Petch", sans-serif;
+}
+#restart:after {
+    background-color: #111; 
+    border-radius: 8px; 
+    content: ""; 
+    display: block;
+    height: 36px; 
+    left: 0; 
+    width: 100%; 
+    position: absolute; 
+    top: -2px;
+    transform: translate(4px, 4px); transition: transform .2s ease-out; z-index: -1;
+}
+#restart:hover:after { transform: translate(0, 0); }
+#restart:active { background-color: #ecd7f0; outline: 0; }
+#restart:hover { outline: 0; }
+
+/* --- */
+body.dark-mode {
+    background-color: #2c2727;
+    color: #fee6e3;
+}
+body.dark-mode #word, 
+body.dark-mode #time, 
+body.dark-mode #wordcount,
+body.dark-mode #loginContainer h2,
+body.dark-mode #speedText,
+body.dark-mode .volume-wrapper span {
+    color: #fee6e3; 
+}
+body.dark-mode .modal-content {
+    background-color: #3d3535;
+    color: #fee6e3;
+}
+body.dark-mode .resultsNames,
+body.dark-mode .result-row {
+    border-bottom: 1px solid #fee6e3;
+}
+body.dark-mode #speedImage {
+    border-color: #fee6e3;
+    box-shadow: 5px 5px 0px #fee6e3;
 }

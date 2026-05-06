@@ -41,14 +41,14 @@ async function login() {
     }
 }
 //_----------------------//
-
+window.appVolume = 0.3;
 
 console.log("Fail õigesti ühendatud");
 
 class Typer{
     constructor(playerName){
         this.name = playerName;
-        this.wordsInGame = 1;
+        this.wordsInGame = 10;
         this.startingWordLength = 2;
         this.startTime = 0;
         this.endTime = 0;
@@ -113,6 +113,15 @@ class Typer{
     }
 
     startTyper(){
+        let startSound = new Audio("47313572-notification-1-269296.mp3"); 
+        startSound.volume = window.appVolume;
+        startSound.play();
+
+        this.bgMusic = new Audio("soundreality-keyboard-typing-sfx-525007.mp3"); 
+        this.bgMusic.loop = true; 
+        this.bgMusic.volume = window.appVolume;
+        this.bgMusic.play();
+
         this.generateWords();
         this.upDateInfo();
         document.querySelector("#info").style.display = "flex";
@@ -148,10 +157,53 @@ class Typer{
     }
 
     endGame(){
+        if (this.bgMusic) {
+            this.bgMusic.pause();
+            this.bgMusic.currentTime = 0; 
+        }
+        let endSound = new Audio("universfield-new-notification-062-494544.mp3"); 
+        endSound.volume = window.appVolume;
+        endSound.play();
+
+        setTimeout(() => {
+            let updSound = new Audio("soundshelfstudio-ui-app-notification-524745.mp3"); 
+            updSound.volume = window.appVolume;
+            updSound.play();
+        }, 1000);
+
+        const speedImg = document.getElementById("speedImage");
+        const speedText = document.getElementById("speedText");
+        const container = document.getElementById("gameEndContainer");
+        this.endTime = performance.now();
+        
+        let seconds = (this.endTime - this.startTime) / 1000;
+        if (seconds < 0.1) seconds = 0.1; 
+        
+        this.score = seconds.toFixed(2);
+        
+        let wpm = Math.round(this.wordsInGame / (seconds / 60));
+        if (!isFinite(wpm)) wpm = 0;
+
+
         this.endTime = performance.now();
         this.score = ((this.endTime - this.startTime) / 1000).toFixed(2);
+        
+        
+        if (wpm < 40) {
+            speedImg.src = "aeglane.png"; 
+            speedText.innerHTML = "Kiirus on " + wpm +"WPM. Sa oled keskmise kiirusega!";
+        } else if (wpm < 70) {
+            speedImg.src = "kiirem.png";
+            speedText.innerHTML = "Kiirus on " + wpm + "WPM. Sa oled üle keskmise kiirusega!";
+        } else {
+            speedImg.src = "kiire.png";
+            speedText.innerHTML = "Kiirus on " + wpm + "WPM. Sa oled kiire!";
+        }
+        
+        container.style.display = "block";
         document.getElementById("word").innerHTML = "Mäng läbi. Sinu aeg on: " + this.score + " sekundit.";
-        window.removeEventListener("keypress", this.keyListener)
+        
+        window.removeEventListener("keypress", this.keyListener);
         this.saveResult();
     }
 
@@ -187,6 +239,16 @@ class Typer{
     upDateInfo(){
         document.getElementById("wordcount").innerHTML = "Sõnu trükitud: " + this.wordsTyped + "/" + this.wordsInGame;
     }
+
+    restartGame() {
+        document.getElementById("gameEndContainer").style.display = "none";
+        this.wordsTyped = 0;
+        this.typeWords = [];
+        this.score = 0;
+        document.getElementById("word").style.color = ""; 
+        document.getElementById("word").innerHTML = "Valmistu...";
+        this.startCountdown();
+    }
 }
 
 let typer;
@@ -215,9 +277,16 @@ onValue(dbRef, (snapshot) =>{
     
     firebaseResults.sort((a, b) => parseFloat(a.time) - parseFloat(b.time));
     firebaseResults = firebaseResults.slice(0, 20);
-    for(let i = 0; i < firebaseResults.length; i++){
+
+   for(let i = 0; i < firebaseResults.length; i++){
         const row = document.createElement("div");
-        row.textContent = `${i+1}. ${firebaseResults[i].name} ${firebaseResults[i].time}`;
+        row.className = "result-row"; 
+        
+        row.innerHTML = `
+            <span class="rank">${i+1}.</span>
+            <span class="name">${firebaseResults[i].name}</span>
+            <span class="time">${firebaseResults[i].time} s</span>
+        `;
         resultDiv.appendChild(row);
     }
 });
@@ -246,4 +315,28 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    document.getElementById("volumeControl").addEventListener("input", (e) => {
+        window.appVolume = parseFloat(e.target.value);
+        if (typer && typer.bgMusic) {
+            typer.bgMusic.volume = window.appVolume; 
+        }
+    });
+
+    document.getElementById("themeToggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        const btn = document.getElementById("themeToggle");
+        
+        if(document.body.classList.contains("dark-mode")) {
+            btn.innerHTML = "Light Mode";
+        } else {
+            btn.innerHTML = "Dark Mode";
+        }
+    });
+
+    document.getElementById("restart").addEventListener("click", () => {
+        if (typer) {
+            typer.restartGame(); 
+        }
+    });
+
 });
