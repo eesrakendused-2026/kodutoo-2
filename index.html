@@ -1,37 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
-    <link rel="stylesheet" href="style.css">
     <title>Typer</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js" defer></script>
+    <script src="typer.js" defer></script>
 </head>
 <body>
-    <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
-    </div>
 
-    <div id="counter" class="container">
-        <div id="time"></div>
-    </div>
+    <!-- Päis -->
+    <header class="header">
+        <h1>Typer</h1>
+        <div class="header-buttons">
+            <button id="themeBtn" class="small-btn">Tume</button>
+            <button id="leaderboardBtn" class="small-btn">Edetabel</button>
+            <button id="openAuthBtn" class="small-btn">Logi sisse</button>
+            <button id="headerLogoutBtn" class="small-btn" hidden>Logi välja</button>
+        </div>
+    </header>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
-    </div>
+    <main class="main">
+        <div id="authModal" class="modal" hidden>
+            <section id="authPanel" class="modal-box auth-card">
+                <button id="closeAuthBtn" class="close-btn">X</button>
+            <h2>Konto</h2>
+            <p id="authStatus">Logi sisse, et sinu katsed salvestuksid kontole.</p>
 
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
-    </div>
+            <div id="authForm" class="auth-form">
+                <label for="authEmail">Email:</label>
+                <input type="email" id="authEmail" placeholder="nimi@email.com">
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+                <label for="authPassword">Parool:</label>
+                <input type="password" id="authPassword" placeholder="vähemalt 6 märki">
+
+                <div class="auth-buttons">
+                    <button id="loginBtn" class="small-btn">Logi sisse</button>
+                    <button id="registerBtn" class="small-btn">Loo konto</button>
+                </div>
+
+                <button id="googleLoginBtn" class="big-btn google-btn">Logi Google'iga sisse</button>
+            </div>
+
+            <div id="userPanel" hidden>
+                <div class="user-row">
+                    <span id="userEmail">-</span>
+                    <button id="logoutBtn" class="small-btn">Logi välja</button>
+                </div>
+            </div>
+
+            <div class="attempts-box">
+                <h3>Minu varasemad katsed</h3>
+                <ol id="myAttemptsList" class="attempts-list">
+                    <li>Logi sisse, et näha oma tulemusi.</li>
+                </ol>
+            </div>
+            </section>
+        </div>
+
+        <!-- 1. Nime sisestamine ja raskuse valimine -->
+        <section id="setup" class="card">
+            <h2>Tere tulemast!</h2>
+            <p>Trüki ette antud sõnu nii kiiresti kui suudad.</p>
+
+            <label for="playerName">Sinu nimi:</label>
+            <input type="text" id="playerName" placeholder="nt. Mari" maxlength="20">
+
+            <p class="form-label">Raskusaste:</p>
+            <div class="difficulty-buttons">
+                <input type="radio" name="difficulty" id="diffEasy" value="easy">
+                <label for="diffEasy">Lihtne</label>
+
+                <input type="radio" name="difficulty" id="diffMedium" value="medium" checked>
+                <label for="diffMedium">Keskmine</label>
+
+                <input type="radio" name="difficulty" id="diffHard" value="hard">
+                <label for="diffHard">Raske</label>
+            </div>
+
+            <button id="startBtn" class="big-btn">Alusta mängu</button>
+        </section>
+
+        <!-- 2. Countdown 3-2-1 -->
+        <section id="countdown" class="countdown" hidden>
+            <p id="countdownNumber">3</p>
+        </section>
+
+        <!-- 3. Mängu ekraan -->
+        <section id="game" class="card" hidden>
+            <!-- Reaalajas statistika -->
+            <div class="stats">
+                <div class="stat">
+                    <p class="stat-label">Aeg</p>
+                    <p class="stat-value" id="liveTime">0.0s</p>
+                </div>
+                <div class="stat">
+                    <p class="stat-label">Kiirus</p>
+                    <p class="stat-value" id="liveWpm">0 WPM</p>
+                </div>
+                <div class="stat">
+                    <p class="stat-label">Täpsus</p>
+                    <p class="stat-value" id="liveAccuracy">100%</p>
+                </div>
+                <div class="stat">
+                    <p class="stat-label">Sõnad</p>
+                    <p class="stat-value" id="liveProgress">0 / 0</p>
+                </div>
+            </div>
+
+            <!-- Sõnade kuvamine -->
+            <div id="wordDisplay" class="word-display"></div>
+
+            <!-- Kasutaja sisend -->
+            <input type="text" id="typingInput" autocomplete="off" spellcheck="false">
+
+            <div class="game-buttons">
+                <button id="restartBtn" class="small-btn">Alusta uuesti</button>
+                <button id="quitBtn" class="small-btn"> Katkesta</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 4. Tulemuste modal -->
+    <div id="resultsModal" class="modal" hidden>
+        <div class="modal-box">
+            <button id="closeResultsBtn" class="close-btn">X</button>
+
+            <h2>Mäng läbi!</h2>
+            <p id="resultStatus" class="result-status"></p>
+
+            <!-- Kiirusepõhine hinnang -->
+            <div class="speed-image">
+                <p id="speedEmoji" class="speed-emoji">🐌</p>
+                <p id="speedLabel" class="speed-label">Tigu</p>
+            </div>
+
+            <!-- Tulemused eraldi ridadena (mitte üks tekst) -->
+            <div class="results">
+                <div class="result-row">
+                    <span class="result-label">Nimi:</span>
+                    <span class="result-value" id="resultName">-</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Kiirus:</span>
+                    <span class="result-value" id="resultWpm">0 WPM</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Täpsus:</span>
+                    <span class="result-value" id="resultAccuracy">0%</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Aeg:</span>
+                    <span class="result-value" id="resultTime">0s</span>
+                </div>
+            </div>
+
+            <button id="playAgainBtn" class="big-btn">Mängi uuesti</button>
         </div>
     </div>
-    
+
+    <!-- 5. Edetabeli sidebar -->
+    <aside id="leaderboardSidebar" class="sidebar" hidden>
+        <div class="sidebar-header">
+            <h2> Edetabel</h2>
+            <button id="closeLeaderboardBtn" class="close-btn">X</button>
+        </div>
+        <ol id="leaderboardList" class="leaderboard"></ol>
+        <button id="clearLeaderboardBtn" class="small-btn">Tühjenda edetabel</button>
+    </aside>
+
 </body>
 </html>
