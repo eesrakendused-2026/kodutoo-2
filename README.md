@@ -1,3 +1,5 @@
+https://ukusk.github.io/kodutoo-2/
+
 # kodutoo-2
 Täiusta tunnis loodud typer'i rakendust.
 
