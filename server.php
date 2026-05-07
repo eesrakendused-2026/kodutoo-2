@@ -1,4 +1,10 @@
 <?php
+    if(isset($_GET["ping"])){
+        header("Content-Type: text/plain; charset=UTF-8");
+        echo "ok";
+        exit;
+    }
+
     if(isset($_POST["save"]) && !empty($_POST["save"])){
         saveToFile($_POST["save"]);
     }
