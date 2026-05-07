@@ -1,7 +1,9 @@
-# kodutoo-2
-Täiusta tunnis loodud typer'i rakendust.
-
-Tähtaeg: 05.05.2026 23:59
+# Remo Kurem
+https://greeny.cs.tlu.ee/~remo/eesrakendus/kodutoo/kodutoo-2/
+* 3 feature'it
+  * dark/light mode
+  * Mängija saab valida kaua ta tahab, et mäng kestaks (15s/30s)
+  * Mängija saab valida raskustaseme (mitme tähelisi sõnu mäng kuvab)
 
 # Kõik nõuded täidetud, siis 30 punkti.
 

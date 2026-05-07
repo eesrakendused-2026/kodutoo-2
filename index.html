@@ -1,37 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
     <title>Typer</title>
 </head>
+ 
 <body>
-    <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+<header>
+    <div class="logo">Typer</div>
+ 
+    <div class="center-controls">
+        <!--https://www.w3schools.com/tags/att_option_value.asp-->
+        <select id="duration">
+            <option value="15">15s</option>
+            <option value="30">30s</option>
+        </select>
+ 
+        <select id="difficulty">
+            <option value="easy">Kerge</option>
+            <option value="medium">Keskmine</option>
+            <option value="hard">Raske</option>
+        </select>
+ 
+        <button id="startBtn">Start Game</button>
     </div>
-
-    <div id="counter" class="container">
-        <div id="time"></div>
+ 
+    <div class="right">
+        <button id="themeToggle">🌙</button>
+        <button id="showResults">Leaderboard</button>
     </div>
-
-    <div id="info" class="container">
+</header>
+ 
+<main>
+    <div id="gameArea">
+        <div id="countdown"></div>
+        <div id="word"></div>
+        <input type="text" id="mainInput" placeholder="Sisesta nimi">
         <div id="wordcount"></div>
     </div>
-
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
+</main>
+ 
+<!-- https://www.w3schools.com/howto/howto_css_modals.asp -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span id="close">&times;</span>
+        <div id="resultDetails"></div>
+        <img id="speedImage">
+        <h3>Leaderboard</h3>
+        <div id="results"></div>
     </div>
-
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
-        </div>
-    </div>
-    
+</div>
+ 
 </body>
 </html>

@@ -1,34 +1,219 @@
-body{
-    margin:0;
-    padding:0;
-}
+/*Suuremjagu elementidest/pealoogika on saadud https://www.w3schools.com/css/default.asp*/
 
-.container{
+/* Source: https://fonts.google.com/specimen/Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+ 
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: #f5efe6;
+    color: #2c2c2c;
+}
+ 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #e8dfd3;
+    border-bottom: 2px solid #ddd;
+}
+ 
+.logo {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+ 
+.center-controls {
+    display: flex;
+    gap: 10px;
+}
+ 
+.right {
+    display: flex;
+    gap: 10px;
+}
+ 
+main {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
-    flex-direction: column;
+    height: 80vh;
+}
+ 
+#gameArea {
+    text-align: center;
+}
+ 
+#countdown {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+ 
+#word {
+    font-size: 3rem;
+    margin: 20px 0;
+}
+ 
+#mainInput {
+    font-size: 1.5rem;
+    padding: 12px;
+    width: 260px;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.container > div {
-    padding: 10px;
+/* Source: https://www.w3schools.com/css/css_pseudo_classes.asp */
+#mainInput:focus {
+    border-color: #6b705c;
+    outline: none;
+    box-shadow: 0 0 8px rgba(107, 112, 92, 0.5);
+}
+ 
+button {
+    background: #6b705c;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+ 
+button:hover {
+    background: #a5a58d;
+}
+ 
+button:active {
+    transform: scale(0.95);
+}
+ 
+select {
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    background: white;
+}
+ 
+select:hover {
+    border-color: #6b705c;
 }
 
-.container > input {
-    margin: 5px;
-}
-
-#info, #wordContainer, #counter{
+/* https://www.w3schools.com/howto/howto_css_modals.asp */
+.modal {
     display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+ 
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 400px;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+ 
+#close {
+    float: right;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+ 
+#close:hover {
+    color: red;
+}
+ 
+#results div {
+    background: #f0ead2;
+    color: #2c2c2c;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+}
+ 
+.lbRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+ 
+.lbRank  { width: 30px; font-weight: bold; }
+.lbName  { flex: 1; }
+.lbWpm   { width: 70px; text-align: right; font-weight: bold; }
+.lbTime  { width: 40px; text-align: right; color: #888; }
+ 
+.lbRow:first-child {
+    color: goldenrod;
+    font-size: 1.05rem;
+}
+ 
+.lbRow:nth-child(even) {
+    background: rgba(0,0,0,0.04);
+    border-radius: 8px;
+}
+ 
+.dark {
+    background: #1e1e1e;
+    color: #eee;
+}
+ 
+.dark header {
+    background: #2c2c2c;
+}
+ 
+.dark .modal-content {
+    background: #333;
+    color: #eee;
+}
+ 
+.dark #results div {
+    background: #444;
+    color: #eee;
+}
+ 
+.dark select {
+    background: #2c2c2c;
+    color: #eee;
+    border-color: #555;
 }
 
-#word, #time{
-    font-size: 36px;
-    font-weight: 700;
-}
-
-#info{
-    min-height: 30px;
-    align-items: start;
+/* https://www.w3schools.com/css/css_rwd_mediaqueries.asp */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 10px;
+    }
+ 
+    .center-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+ 
+    .center-controls select,
+    .center-controls button {
+        width: 100%;
+    }
+ 
+    #mainInput {
+        width: 100%;
+        box-sizing: border-box;
+    }
+ 
+    #word {
+        font-size: 2rem;
+    }
+ 
+    #countdown {
+        font-size: 3rem;
+    }
 }
