@@ -1,199 +1,335 @@
-console.log("Fail õigesti ühendatud");
+// Typer game logic
+console.log("Typer JS Loaded");
 
-class Typer{
-    constructor(){
-        this.name = "";
-        this.wordsInGame = 1;
-        this.startingWordLength = 2;
+const SOUNDS = {
+    start: 'https://s3.amazonaws.com/freecodecamp/drums/Chord_1.mp3',
+    key: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
+    end: 'https://s3.amazonaws.com/freecodecamp/drums/Chord_2.mp3',
+    leaderboard: 'https://s3.amazonaws.com/freecodecamp/drums/Chord_3.mp3'
+};
+
+class Typer {
+    constructor() {
+        this.playerName = "";
+        this.totalWords = 10;
+        this.wordsCompleted = 0;
+        this.totalCharsTyped = 0;
         this.startTime = 0;
-        this.endTime = 0;
-        this.word = "Suvaline";
-        this.words = [];
-        this.typeWords = [];
-        this.wordsTyped = 0;
-        this.score = 0;
+        this.currentWord = "";
+        this.allWordsByLength = [];
+        this.wordsToType = [];
+        this.leaderboard = [];
 
-        this.results = [];
-
-        this.loadFromFile();
+        this.init();
     }
 
-    loadResults(){
-        const resultDiv = document.getElementById("results");
-        resultDiv.innerHTML = "";
-
-        for(let i=0; i < this.results.length; i++){
-            const row = document.createElement("div");
-            row.textContent = `${i+1}. ${this.results[i].name} ${this.results[i].time}`;
-            resultDiv.appendChild(row);
-        }
-    }
-
-    async loadFromFile(){
-        console.log("load from file sees");
-        const responseFromFile = await fetch("lemmad2013.txt");
-        const allWords = await responseFromFile.text();
-        this.loadResultsFromFile();
-
-        this.getWords(allWords);
-    }
-
-    async loadResultsFromFile(){
-        const resultsResponse = await fetch("database.txt");
-        const resultsText = await resultsResponse.text();
-        let content = JSON.parse(resultsText).content;
-
-        console.log(content);
-
-        this.results = JSON.parse(content) || [];
-        this.loadResults();
-        this.saveResult();
-    }
-
-    getWords(data){
-        //console.log(data);
-        const dataFromFile = data.split("\n");
-        this.separateWordsByLength(dataFromFile);
-    }
-
-    separateWordsByLength(words){
-        for (let word of words){
-            const wordLength = word.length;
-            if(!this.words[wordLength]){
-                this.words[wordLength] = []
-            }
-            this.words[wordLength].push(word);
-            //[["a", "b"], ["as", "nm"]]
-        }
-
-        console.log(this.words);
-        this.askName();
-    }
-
-    askName(){
-        document.getElementById("submitname").addEventListener('click', () => {
-           console.log(document.getElementById("username").value);
-           this.name = document.getElementById("username").value
-           this.startCountdown();
-        })
-    }
-
-    startCountdown(){
-        document.getElementById("counter").style.display = "flex";
-        document.querySelector("#name").style.display = "none";
-        let i = 3;
-
-        let countdown = setInterval(() => {
-            document.getElementById("time").innerHTML = i-1;
-            i--;
-            console.log(i)
-            if(i == 0){
-                document.getElementById("counter").style.display = "none";
-                this.startTyper();
-                clearInterval(countdown);
-            }
-        }, 1000);
-
-    }
-
-    startTyper(){
-        this.generateWords();
-        this.upDateInfo();
-        document.querySelector("#info").style.display = "flex";
-        document.querySelector("#wordContainer").style.display = "flex";
-
-        this.startTime = performance.now();
+    init() {
+        this.startSound = new Audio(SOUNDS.start);
+        this.keySound = new Audio(SOUNDS.key);
+        this.endSound = new Audio(SOUNDS.end);
+        this.leadSound = new Audio(SOUNDS.leaderboard);
         
-        this.keyListener = (e) => {
-            this.shorteWord(e.key);
-            console.log("keypress sees")
-        }
+        this.keySound.volume = 0.5;
+        this.startSound.volume = 0.5;
 
-        window.addEventListener("keypress", this.keyListener)
+        this.setupDarkMode();
+        this.setupNameInput();
+        this.setupModal();
+        this.loadGameData();
     }
 
-    shorteWord(keypressed){
-        if(this.word[0] === keypressed && this.word.length > 1 && this.typeWords.length > this.wordsTyped){
-            this.word = this.word.slice(1);
-            this.drawWord();
-        } else if (this.word[0] === keypressed && this.word.length == 1 && this.wordsTyped <= this.typeWords.length-2){
-            this.wordsTyped++;
-            this.upDateInfo();
-            this.selectWord();
-        } else if(this.word[0] === keypressed && this.word.length == 1 && this.typeWords.length-1 == this.wordsTyped){
-            this.upDateInfo();
-            this.wordsTyped = 0;
-            this.endGame();
-        } else if(this.word[0] != keypressed){
-            document.getElementById("word").style.color = "red";
+    playSound(audio) {
+        if (audio) {
+            audio.currentTime = 0;
+            audio.play().catch(function(e) {
+                console.log("Heli mängimine ebaõnnestus");
+            });
+        }
+    }
+
+    setupDarkMode() {
+        let btn = document.getElementById("darkModeToggle");
+        
+        if (localStorage.getItem("darkMode") === "true") {
+            document.body.classList.add("dark-mode");
+            btn.innerHTML = "☀️";
+        }
+
+        btn.addEventListener("click", function() {
+            document.body.classList.toggle("dark-mode");
+            let isDark = document.body.classList.contains("dark-mode");
+            localStorage.setItem("darkMode", isDark);
+            
+            if (isDark) {
+                btn.innerHTML = "☀️";
+            } else {
+                btn.innerHTML = "🌙";
+            }
+        });
+    }
+
+    setupNameInput() {
+        let input = document.getElementById("username");
+        let submitBtn = document.getElementById("submitname");
+        
+        submitBtn.addEventListener("click", () => {
+            if (input.value.trim() !== "") {
+                this.playerName = input.value.trim();
+                this.startCountdown();
+            } else {
+                input.style.borderColor = "red";
+                setTimeout(() => {
+                    input.style.borderColor = "";
+                }, 1000);
+            }
+        });
+    }
+
+    setupModal() {
+        let modal = document.getElementById("resultsContainer");
+        let showBtn = document.getElementById("showResultsBtn");
+        let closeBtn = document.querySelector(".close");
+
+        showBtn.addEventListener("click", () => {
+            modal.classList.add("show");
+        });
+
+        closeBtn.addEventListener("click", () => {
+            modal.classList.remove("show");
+        });
+    }
+
+    async loadGameData() {
+        try {
+            let response = await fetch("lemmad2013.txt");
+            let text = await response.text();
+            
+            let words = text.split("\n");
+            for (let i = 0; i < words.length; i++) {
+                let word = words[i].trim();
+                if (word.length > 0) {
+                    let len = word.length;
+                    if (this.allWordsByLength[len] === undefined) {
+                        this.allWordsByLength[len] = [];
+                    }
+                    this.allWordsByLength[len].push(word);
+                }
+            }
+            
+            this.fetchLeaderboard();
+        } catch (error) {
+            console.error("Sõnade laadimine ebaõnnestus", error);
+        }
+    }
+
+    async fetchLeaderboard() {
+        try {
+            let response = await fetch("database.txt");
+            let data = await response.json();
+            this.leaderboard = JSON.parse(data.content);
+        } catch (error) {
+            let localData = localStorage.getItem("score");
+            if (localData) {
+                this.leaderboard = JSON.parse(localData);
+            } else {
+                this.leaderboard = [];
+            }
+        }
+        this.renderLeaderboard();
+    }
+
+    startCountdown() {
+        document.getElementById("name").style.display = "none";
+        document.getElementById("counter").style.display = "flex";
+        
+        let timeEl = document.getElementById("time");
+        timeEl.innerHTML = "Valmistu, " + this.playerName + "!";
+        
+        let left = 3;
+        setTimeout(() => {
+            let timer = setInterval(() => {
+                left--;
+                if (left > 0) {
+                    timeEl.innerHTML = left;
+                } else {
+                    clearInterval(timer);
+                    document.getElementById("counter").style.display = "none";
+                    this.startGame();
+                }
+            }, 1000);
+        }, 1000);
+    }
+
+    startGame() {
+        for (let i = 0; i < this.totalWords; i++) {
+            let wordLen = 1 + i;
+            let list = this.allWordsByLength[wordLen];
+            if (list && list.length > 0) {
+                let randomIndex = Math.floor(Math.random() * list.length);
+                this.wordsToType.push(list[randomIndex]);
+            } else {
+                this.wordsToType.push("varusõna");
+            }
+        }
+        
+        this.playSound(this.startSound);
+        document.getElementById("gameUI").style.display = "block";
+        this.startTime = performance.now();
+        this.nextWord();
+        
+        this.keyHandler = (e) => this.handleKey(e.key);
+        window.addEventListener("keypress", this.keyHandler);
+    }
+
+    handleKey(key) {
+        if (this.currentWord[0] === key) {
+            this.playSound(this.keySound);
+            this.totalCharsTyped++;
+            
+            this.currentWord = this.currentWord.slice(1);
+            document.getElementById("word").innerHTML = this.currentWord;
+            this.updateStats();
+
+            if (this.currentWord.length === 0) {
+                this.wordsCompleted++;
+                
+                let wordEl = document.getElementById("word");
+                wordEl.classList.add("flash-correct");
+                setTimeout(() => {
+                    wordEl.classList.remove("flash-correct");
+                }, 300);
+                
+                if (this.wordsCompleted < this.totalWords) {
+                    this.nextWord();
+                } else {
+                    this.finishGame();
+                }
+            }
+        } else {
+            let wordEl = document.getElementById("word");
+            wordEl.classList.add("flash-error");
             setTimeout(() => {
-                document.getElementById("word").style.color = "black";
-            }, 100)
+                wordEl.classList.remove("flash-error");
+            }, 300);
         }
     }
 
-    endGame(){
-        this.endTime = performance.now();
-        this.score = ((this.endTime - this.startTime) / 1000).toFixed(2);
-        document.getElementById("word").innerHTML = "Mäng läbi. Sinu aeg on: " + this.score + " sekundit.";
-        window.removeEventListener("keypress", this.keyListener)
-        this.loadResultsFromFile();
+    nextWord() {
+        this.currentWord = this.wordsToType[this.wordsCompleted];
+        document.getElementById("word").innerHTML = this.currentWord;
+        this.updateStats();
     }
 
-    async saveResult(){
-        let result = {
-            name: this.name,
-            time: this.score
+    updateStats() {
+        document.getElementById("wordcount").innerHTML = "Sõnu: " + this.wordsCompleted + " / " + this.totalWords;
+        
+        let percent = (this.wordsCompleted / this.totalWords) * 100;
+        document.getElementById("progressBar").style.width = percent + "%";
+        
+        let timeNow = performance.now();
+        let minutes = ((timeNow - this.startTime) / 1000) / 60;
+        
+        if (minutes > 0) {
+            let wpm = Math.round((this.totalCharsTyped / 5) / minutes);
+            document.getElementById("wpmDisplay").innerHTML = "WPM: " + wpm;
         }
+    }
 
-        console.log(typeof(this.results))
-        console.log(this.results)
+    finishGame() {
+        window.removeEventListener("keypress", this.keyHandler);
+        this.playSound(this.endSound);
+        
+        document.getElementById("word").innerHTML = "Mäng läbi!";
+        document.getElementById("showResultsBtn").style.display = "inline-block";
+        document.getElementById("playAgainBtn").style.display = "inline-block";
+        
+        let timeSecs = ((performance.now() - this.startTime) / 1000).toFixed(2);
+        let wpm = Math.round((this.totalCharsTyped / 5) / (timeSecs / 60));
+        
+        this.renderUserScore(timeSecs, wpm);
+        
+        setTimeout(() => {
+            document.getElementById("showResultsBtn").click();
+        }, 500);
+        
+        this.saveScore(timeSecs, wpm);
+    }
 
-        this.results.push(result);
-        this.results.sort((a, b) => parseFloat(a.time) - parseFloat(b.time));
-        localStorage.setItem("score", JSON.stringify(this.results));
+    renderUserScore(time, wpm) {
+        let img = "slow.png";
+        let category = "Aeglane";
+        
+        if (wpm >= 60) {
+            img = "fast.png";
+            category = "Kiire";
+        } else if (wpm >= 30) {
+            img = "average.png";
+            category = "Keskmine";
+        }
+        
+        let htmlContent = "";
+        htmlContent += "<div class='score-name'>" + this.playerName + "</div>";
+        htmlContent += "<div class='score-time'>" + time + " s &bull; " + wpm + " WPM</div>";
+        htmlContent += "<img src='" + img + "' class='score-image'>";
+        htmlContent += "<div class='score-category'>" + category + "</div>";
+        
+        document.getElementById("scoreContent").innerHTML = htmlContent;
+    }
 
-        try{
+    async saveScore(time, wpm) {
+        let newScore = {
+            name: this.playerName,
+            time: time,
+            wpm: wpm
+        };
+        
+        this.leaderboard.push(newScore);
+        
+        // Sorteerime aja järgi
+        this.leaderboard.sort((a, b) => {
+            return parseFloat(a.time) - parseFloat(b.time);
+        });
+        
+        localStorage.setItem("score", JSON.stringify(this.leaderboard));
+        this.renderLeaderboard();
+
+        try {
             await fetch("server.php", {
                 method: "POST",
-                headers: {"Content-Type" : "application/x-www-form-urlencoded"},
-                body: "save=" + encodeURIComponent(JSON.stringify(this.results))
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "save=" + encodeURIComponent(JSON.stringify(this.leaderboard))
             });
-            console.log("success" + encodeURIComponent(JSON.stringify(this.results)))
-        } catch(err){
-            alert("Failed " + err)
-        } finally{
-            console.log("päring lõpetud")
-            this.loadResults();
+            this.playSound(this.leadSound);
+        } catch (e) { 
+            console.error("Salvestamine ebaõnnestus", e); 
         }
-
-        console.log(this.results);
-
     }
 
-    generateWords(){
-        for(let i=0; i<this.wordsInGame; i++){
-            const len = this.wordsInGame + i;
-            const randomIndex = Math.floor(Math.random() * this.words[len].length);
-            this.typeWords[i] = this.words[len][randomIndex];
+    renderLeaderboard() {
+        let resultsDiv = document.getElementById("results");
+        resultsDiv.innerHTML = "";
+        
+        for (let i = 0; i < this.leaderboard.length; i++) {
+            let entry = this.leaderboard[i];
+            
+            let row = document.createElement("div");
+            row.className = "result-row";
+            
+            let wpmValue = entry.wpm;
+            if (wpmValue === undefined) {
+                wpmValue = "-";
+            }
+            
+            row.innerHTML = `
+                <span class="result-rank">${i + 1}.</span>
+                <span class="result-name">${entry.name}</span>
+                <span class="result-time">${entry.time}</span>
+                <span class="result-wpm">${wpmValue}</span>
+            `;
+            
+            resultsDiv.appendChild(row);
         }
-
-        this.selectWord();
-    }
-
-    selectWord(){
-        this.word = this.typeWords[this.wordsTyped];
-        this.drawWord();
-
-    }
-
-    drawWord(){
-        document.getElementById("word").innerHTML = this.word;
-    }
-
-    upDateInfo(){
-        document.getElementById("wordcount").innerHTML = "Sõnu trükitud: " + this.wordsTyped + "/" + this.wordsInGame;
     }
 }
 
-let typer = new Typer();
+let game = new Typer();

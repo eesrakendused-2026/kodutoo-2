@@ -1,34 +1,281 @@
-body{
-    margin:0;
-    padding:0;
+/* CSS muutujad värvide jaoks */
+:root {
+    --bg-color: #f0f4f8;
+    --text-color: #1e3c72;
+    --primary-color: #2a5298;
+    --secondary-color: #ff8c42;
+    --secondary-hover: #ff7a1f;
+    --modal-bg: #ffffff;
+    --border-color: #d4e1f5;
+    --font-main: 'Poppins', sans-serif;
 }
 
-.container{
+/* Tume režiim */
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --primary-color: #90caf9;
+    --secondary-color: #ffab40;
+    --secondary-hover: #ff9100;
+    --modal-bg: #1e1e1e;
+    --border-color: #333333;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 200px;
     flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.container > div {
-    padding: 10px;
+h1 {
+    font-size: 40px;
+    color: var(--primary-color);
 }
 
-.container > input {
-    margin: 5px;
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
 }
 
-#info, #wordContainer, #counter{
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+input[type="text"] {
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--modal-bg);
+    color: var(--text-color);
+}
+
+input[type="button"], .btn {
+    padding: 12px 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Esimene ja teine pseudo-klass: :focus ja :hover */
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+input[type="button"]:hover, .btn:hover {
+    background-color: var(--secondary-hover);
+}
+
+/* Kolmas pseudo-klass: :active */
+input[type="button"]:active, .btn:active {
+    transform: scale(0.95);
+}
+
+.mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: var(--modal-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#word, #time {
+    font-size: 48px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 20px 0;
+    min-height: 70px;
+}
+
+#info {
+    width: 100%;
+    max-width: 500px;
+    background-color: var(--modal-bg);
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-container {
+    width: 100%;
+    height: 10px;
+    background-color: var(--border-color);
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background-color: #2ecc71;
+    transition: width 0.3s;
+}
+
+.controls-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Animatsioonid */
+@keyframes flashC {
+    0% { color: #2ecc71; transform: scale(1.1); }
+    100% { color: var(--primary-color); transform: scale(1); }
+}
+
+.flash-correct {
+    animation: flashC 0.2s;
+}
+
+@keyframes flashE {
+    0% { transform: translateX(0); color: var(--primary-color); }
+    25% { transform: translateX(-5px); color: #e74c3c; }
+    75% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+}
+
+.flash-error {
+    animation: flashE 0.3s;
+}
+
+/* Modaali stiilid */
+#resultsContainer {
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
 }
 
-#word, #time{
-    font-size: 36px;
-    font-weight: 700;
+#resultsContainer.show {
+    display: flex;
 }
 
-#info{
-    min-height: 30px;
-    align-items: start;
+#modalContent {
+    background-color: var(--modal-bg);
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 16px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* Neljas pseudo-klass: ::after */
+h2 {
+    color: var(--primary-color);
+    text-align: center;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background-color: var(--secondary-color);
+}
+
+.user-score-box {
+    background-color: var(--primary-color);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.score-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 10px auto;
+    border: 4px solid white;
+    background-color: white;
+    object-fit: cover;
+}
+
+.results-header, .result-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.result-rank { width: 10%; font-weight: bold; color: var(--secondary-color); }
+.result-name { width: 40%; text-align: left; }
+.result-time { width: 25%; text-align: right; }
+.result-wpm { width: 25%; text-align: right; color: #2ecc71; font-weight: bold; }
+
+.results-header {
+    font-weight: bold;
+    border-bottom: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* Viies pseudo-klass: :nth-child(even) */
+.result-row:nth-child(even) {
+    background-color: rgba(0,0,0,0.02);
+}
+
+#results {
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+/* Mobiilivaade */
+@media screen and (max-width: 600px) {
+    h1 {
+        font-size: 30px;
+    }
+    #word, #time {
+        font-size: 36px;
+    }
+    .input-group {
+        flex-direction: column;
+    }
+    .results-header, .result-row {
+        font-size: 13px;
+    }
 }

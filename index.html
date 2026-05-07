@@ -3,35 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="typer.js" defer></script>
     <link rel="stylesheet" href="style.css">
-    <title>Typer</title>
+    <title>Typer Mäng</title>
 </head>
 <body>
+    <button id="darkModeToggle" class="mode-toggle" title="Lülita tume režiim">🌙</button>
+    
     <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+        <h1>Typer Mäng</h1>
+        <label for="username">Sisesta oma nimi, et alustada</label>
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Sinu nimi...">
+            <input type="button" value="Salvesta ja Alusta" id="submitname">
+        </div>
     </div>
 
     <div id="counter" class="container">
         <div id="time"></div>
     </div>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
-    </div>
+    <div id="gameUI" style="display: none;">
+        <div id="info" class="container">
+            <div id="wordcount"></div>
+            <!-- UUS FEATURE: WPM näit -->
+            <div id="wpmDisplay">WPM: 0</div>
+            <!-- UUS FEATURE: Progress bar -->
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+        </div>
 
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
-    </div>
-
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+        <div id="wordContainer" class="container">
+            <div id="word"></div>
+            <div id="score"></div>
+        </div>
+        
+        <div class="controls-container">
+            <button id="showResultsBtn" class="btn primary-btn" style="display: none;">Edetabel</button>
+            <button id="playAgainBtn" class="btn secondary-btn" style="display: none;" onclick="window.location.reload()">Mängi uuesti</button>
         </div>
     </div>
-    
+
+    <!-- Modal tulemuste jaoks -->
+    <div id="resultsContainer">
+        <div id="modalContent">
+            <span class="close">&times;</span>
+            <h2>Sinu Tulemus</h2>
+            <div id="userScore" class="user-score-box">
+                <div id="scoreContent"></div>
+            </div>
+            
+            <h2>Edetabel</h2>
+            <div class="results-header">
+                <span class="header-rank">Koht</span>
+                <span class="header-name">Nimi</span>
+                <span class="header-time">Aeg (s)</span>
+                <span class="header-wpm">WPM</span>
+            </div>
+            <div id="results"></div>
+        </div>
+    </div>
 </body>
 </html>
