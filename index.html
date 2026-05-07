@@ -1,37 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c45c3e'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="typer.js" defer></script>
     <title>Typer</title>
 </head>
 <body>
-    <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
-    </div>
+    <header class="top-bar">
+        <label class="theme-switch">
+            <input type="checkbox" id="themeToggle" aria-label="Tume teema">
+            <span class="theme-slider"></span>
+        </label>
+    </header>
 
-    <div id="counter" class="container">
-        <div id="time"></div>
-    </div>
+    <main class="page">
+        <div id="namePanel" class="card name-card">
+            <label class="field-label" for="username">Sisesta oma nimi</label>
+            <input type="text" id="username" class="text-input" autocomplete="name">
+            <label class="field-label" for="wordCountPick">Sõnade arv</label>
+            <select id="wordCountPick" class="select-input">
+                <option value="3">3</option>
+                <option value="5" selected>5</option>
+                <option value="7">7</option>
+            </select>
+            <button type="button" id="submitname" class="btn btn-primary">Salvesta</button>
+        </div>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
-    </div>
+        <div id="counterPanel" class="card counter-card is-hidden" aria-live="polite">
+            <p class="countdown-label">Algab</p>
+            <div id="time" class="countdown-num"></div>
+        </div>
 
-    <div id="wordContainer" class="container">
-        <div id="word"></div>
-        <div id="score"></div>
-    </div>
+        <div id="infoPanel" class="card info-card is-hidden">
+            <div id="wordcount" class="stat-line"></div>
+            <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+        </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+        <div id="wordPanel" class="card word-card is-hidden">
+            <div id="word" class="word-display" lang="et"></div>
+            <div id="score" class="score-line"></div>
+        </div>
+
+        <button type="button" id="showResultsBtn" class="btn btn-accent is-hidden">Vaata tulemust</button>
+
+        <div id="resultsPanel" class="card results-card">
+            <h2 class="results-heading">TOP 20</h2>
+            <div id="results" class="results-list"></div>
+        </div>
+    </main>
+
+    <div id="modal" class="modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-panel">
+            <button type="button" class="modal-close" id="modalClose" aria-label="Sulge">×</button>
+            <h2 id="modalTitle" class="modal-title">Sinu tulemus</h2>
+            <figure class="speed-figure">
+                <img id="speedTierImage" class="speed-image" src="" alt="">
+                <figcaption id="speedCaption" class="speed-caption"></figcaption>
+            </figure>
+            <dl class="result-stats">
+                <div class="result-row">
+                    <dt class="result-label">Nimi</dt>
+                    <dd id="resultName" class="result-value"></dd>
+                </div>
+                <div class="result-row">
+                    <dt class="result-label">Aeg</dt>
+                    <dd id="resultTime" class="result-value"></dd>
+                </div>
+                <div class="result-row">
+                    <dt class="result-label">Sõnu</dt>
+                    <dd id="resultWordCount" class="result-value"></dd>
+                </div>
+                <div class="result-row">
+                    <dt class="result-label">Kiirus</dt>
+                    <dd id="resultWpm" class="result-value"></dd>
+                </div>
+                <div class="result-row">
+                    <dt class="result-label">Hinnang</dt>
+                    <dd id="resultTier" class="result-value"></dd>
+                </div>
+            </dl>
         </div>
     </div>
-    
 </body>
 </html>
