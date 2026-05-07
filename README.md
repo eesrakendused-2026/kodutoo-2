@@ -1,3 +1,34 @@
+https://greeny.cs.tlu.ee/~markusp/Eesrakendus/3004/
+
+Firebase:
+1. Google sisselogimine
+2. Tulemuste salvestamine Firebase Realtime Database'i
+3. Tulemuste laadimine Firebase'ist(eemaldatud PHP + database.txt)
+
+Kodutöö punktid:
+1. Google font (Space Mono + Inter) APIga
+2. Edetabel (Koht/nimi/kiirus)
+3. Trükkimiskiiruse GIF vastavalt wpm'ile
+4. Media query mobiilile
+5. Uus CSS kujundus
+6. 5 CSS pseudo-classi (:hover,:active,:focus,:last-child,:first-child)
+7. Heliklipid (Mängu algus, õige täht, vale täht, pause, tühista, lõpp)
+
+Omapoolsed featurid:
+1. Raskustaseme valik
+2. Parim isiklik tulemus
+3. Mängu paus ja tühistamine
+4. Vigade loendur
+5. Edetabeli filtreerimine raskustaseme järgi
+6. Tähed lähevad roheliseks kui õigesti trükid
+7. Sõnad ei kordu mängus
+8. Countdown peale pausi ka
+
+Laenatud kood:
+1. Heliklipid
+2. Raskustasemed
+3. Tähtede värvimine
+
 # kodutoo-2
 Täiusta tunnis loodud typer'i rakendust.
 

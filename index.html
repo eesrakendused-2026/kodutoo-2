@@ -1,25 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="typer.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Typer</title>
 </head>
 <body>
+
     <div id="name" class="container">
-        <label for="name">Sisesta oma nimi</label>
-        <input type="text" id="username">
-        <input type="button" value="Salvesta" id="submitname">
+        <h1 class="logo">Typer</h1>
+        <button id="googleLoginBtn" class="btn-google">Logi sisse Google'iga</button>
+        <div id="loggedInInfo" style="display:none">
+            <p id="loggedInAs"></p>
+            <div id="difficultySelect">
+                <label>Raskustase:</label>
+                <button class="btn-difficulty active" data-level="easy">Lihtne</button>
+                <button class="btn-difficulty" data-level="medium">Keskmine</button>
+                <button class="btn-difficulty" data-level="hard">Raske</button>
+            </div>
+            <input type="button" value="Alusta mängu" id="submitname" class="btn-primary">
+        </div>
     </div>
 
     <div id="counter" class="container">
         <div id="time"></div>
     </div>
 
-    <div id="info" class="container">
-        <div id="wordcount"></div>
+    <div id="pauseScreen" class="container" style="display:none">
+        <h2>Mäng on pausil</h2>
+        <button id="resumeBtn" class="btn-primary">Jatka</button>
     </div>
 
     <div id="wordContainer" class="container">
@@ -27,11 +40,48 @@
         <div id="score"></div>
     </div>
 
-    <div id="resultsContainer" class="container">
-        <h2>TOP 20</h2>
-        <div id="results">
+    <div id="endScreen" class="container" style="display:none">
+        <div id="endMessage"></div>
+        <div id="speedImage"></div>
+        <div id="personalBest"></div>
+        <input type="button" value="Mängi uuesti" id="restartBtn" class="btn-primary">
+        <input type="button" value="Vaheta kasutajat" id="switchUserBtn" class="btn-secondary">
+    </div>
+
+    <div id="resultsContainer" class="container" style="display:none">
+        <div id="gameButtons">
+            <button id="pauseBtn" class="btn-secondary" style="display:none">Pause | Space</button>
+            <button id="cancelBtn" class="btn-secondary" style="display:none">Valju | Esc</button>
+        </div>
+        <div id="wordcount"></div>
+        <button id="leaderboardBtn" class="btn-secondary">Kuva edetabel</button>
+        <button id="logoutBtn" class="btn-secondary">Logi valja</button>
+    </div>
+
+    <div id="leaderboardModal" class="modal" style="display:none">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>TOP 20</h2>
+                <button id="closeModal" class="btn-close">✕</button>
+            </div>
+            <div id="leaderboardFilter">
+                <button class="btn-filter active" data-filter="easy">Lihtne</button>
+                <button class="btn-filter" data-filter="medium">Keskmine</button>
+                <button class="btn-filter" data-filter="hard">Raske</button>
+            </div>
+            <div class="result-header">
+                <span>Koht</span>
+                <span>Nimi</span>
+                <span>Kiirus</span>
+            </div>
+            <div id="results"></div>
         </div>
     </div>
-    
+
+    <div id="footer">
+        <span>Markus Prokuda</span>
+    </div>
+
+    <script type="module" src="typer.js"></script>
 </body>
 </html>
