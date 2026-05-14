@@ -1,14 +1,57 @@
+.montserrat-mainFont {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+
 body{
     margin:0;
     padding:0;
+    font-family: "Montserrat", sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f7f6;
+    transition: all 0.3s ease;
 }
 
-.container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 200px;
-    flex-direction: column;
+body.dark-mode {
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+}
+
+body.dark-mode .container {
+    background: #16213e;
+    color: #e0e0e0;
+    border: 1px solid #0f3460;
+}
+
+body.dark-mode .modal-content {
+    background-color: #16213e;
+    color: #ffffff;
+    border: 1px solid #0f3460;
+}
+
+body.dark-mode #word {
+    color: #00d2ff;
+}
+
+body.dark-mode button {
+    background: linear-gradient(45deg, #4834d4, #686de0);
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .container > div {
@@ -23,12 +66,289 @@ body{
     display: none;
 }
 
-#word, #time{
+#wordContainer {
+    flex-direction: column;
+    align-items: center;
+}
+
+#word{
+    margin-top: 10px;
     font-size: 36px;
     font-weight: 700;
+    word-wrap: break-word;
 }
 
 #info{
     min-height: 30px;
     align-items: start;
+}
+
+#time {
+    font-size: 60px;
+    color: #4285f4;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #4285f4;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+    font-family: inherit;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 85%;
+  max-width: 600px;
+  border-radius: 8px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.close {
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: "Montserrat", sans-serif;
+    color: #333;
+}
+
+.results-table th {
+    background-color: #f2f2f2;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.results-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.results-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.results-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.results-table td:first-child {
+    width: 50px;
+    color: #888;
+}
+
+.results-table td:last-child {
+    font-weight: bold;
+    color: #2ecc71;
+    text-align: right;
+}
+
+.results-table th,
+.results-table td {
+    text-align: left;
+    padding: 12px;
+}
+
+.results-table th:nth-child(1),
+.results-table td:nth-child(1) {
+    width: 60px;
+}
+
+.results-table th:nth-child(2),
+.results-table td:nth-child(2) {
+    width: auto;
+}
+
+.results-table th:nth-child(3),
+.results-table td:nth-child(3) {
+    width: 100px;
+    text-align: right;
+}
+
+.modal-content h2, 
+.modal-content h3, 
+.modal-content #speedCategory {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+
+.top-corner-btn {
+    position: fixed; 
+    top: 20px; 
+    right: 20px;
+    z-index: 1000;
+    width: auto;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.top-corner-btn:hover {
+    opacity: 1; 
+}
+
+#progressContainer {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: none;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-mode #progressContainer {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+#progressBar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #4cd137, #2ecc71);
+    box-shadow: 0 0 10px rgba(76, 209, 55, 0.5);
+    border-radius: 10px;
+    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#themeToggle {
+    right: 15px;
+}
+
+#musicToggle {
+    right: 190px;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.error-shake {
+    animation: shake 0.2s ease-in-out;
+    border: 2px solid #e94560 !important;
+}
+
+@media screen and (max-width: 600px) {
+    #word {
+        font-size: 28px;
+    }
+
+    #time {
+        font-size: 45px;
+    }
+
+    .container {
+        padding: 15px;
+        margin-top: 10px;
+        width: 95%;
+    }
+
+    .top-corner-btn {
+        top: 10px;
+        right: 10px;
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+
+    .modal-content {
+        width: 95% !important;
+        margin: 5% auto;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .results-table {
+        font-size: 13px;
+    }
+
+    .results-table th,
+    .results-table td {
+        padding: 8px 4px;
+    }
+
+    .results-table th:nth-child(1),
+    .results-table td:nth-child(1) {
+        width: 30px;
+    }
+
+    .results-table th:nth-child(3),
+    .results-table td:nth-child(3) {
+        width: 70px;
+        white-space: nowrap;
+    }
+
+    .results-table td strong {
+        display: block;
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap; 
+    }
+
+    button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #musicToggle {
+        right: 90px;
+    }
+}
+
+body.dark-mode .modal-content h2, 
+body.dark-mode .modal-content h3, 
+body.dark-mode #speedCategory {
+    color: #ffffff !important;
+}
+
+body.dark-mode .results-table th {
+    background-color: #0f3460;
+    color: #00d2ff !important;
+}
+
+body.dark-mode .results-table td {
+    color: #ffffff !important;
+    border-bottom: 1px solid #0f3460;
+}
+
+body.dark-mode .results-table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .results-table tr:hover {
+    background-color: rgba(0, 210, 255, 0.1);
 }
